@@ -10,7 +10,7 @@ import gen.*;
 public class Compiler {
 
     public static void main(String[] args) throws IOException{
-        CharStream stream = CharStreams.fromFileName("C:\\Users\\negin\\Downloads\\Compressed\\JythonCompiler\\JythonCompiler\\src\\input\\codes.txt");
+        CharStream stream = CharStreams.fromFileName("E:\\Files\\College Files\\Session 6\\Compiler\\Project\\Phase 2\\JythonCompiler\\compiler\\src\\input\\codes.txt");
         jythonLexer lexer = new jythonLexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         jythonParser parser = new jythonParser(tokens);

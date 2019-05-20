@@ -1,6 +1,10 @@
 package gen;// Generated from C:/Users/negin/Downloads/Compressed/JythonCompiler/JythonCompiler/grammar\jython.g4 by ANTLR 4.7
 
+import classes.Class;
+import classes.Kind;
 import classes.SymbolTable;
+import classes.Variable;
+import javafx.util.Pair;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -44,19 +48,20 @@ public class jythonBaseListener implements jythonListener {
 	 */
 	@Override public void enterClassDec(jythonParser.ClassDecContext ctx) {
 		String className = ctx.USER_TYPE(0).getText();
-		if(currentScope.table.contains(className)) {
+		if(currentScope.table.contains(new Pair<>(Kind.Class, className))) {
 			System.out.println("Error101: in line " + ctx.start.getLine() + ", " + className + " has been defined already");
-			currentScope.table.put("class", className + "(duplicate)");
-		} else
-			currentScope.table.put("class", className);
+			className += "(duplicate)";
+		}
+
+		Class newClass = new Class(className);
+		if (ctx.USER_TYPE().size() > 1) {
+			newClass.parentName = ctx.USER_TYPE(1).getText();
+		}
+
+		currentScope.table.put(new Pair<>(Kind.Class, className), newClass);
 
 		currentScope = new SymbolTable(currentScope);
-		currentScope.table.put("className", className);
-
-		if (ctx.USER_TYPE().size() > 1) {
-			String parentName = ctx.USER_TYPE(1).getText();
-			currentScope.table.put("parentName", parentName);
-		}
+		currentScope.table.put(new Pair<>(Kind.Class, className), newClass);
 	}
 	/**
 	 * {@inheritDoc}
@@ -64,9 +69,7 @@ public class jythonBaseListener implements jythonListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitClassDec(jythonParser.ClassDecContext ctx) {
-
-
-		for (String key : currentScope.table.keySet()) {
+		for (Pair<Kind, String> key : currentScope.table.keySet()) {
 			System.out.println(key + " : " + currentScope.table.get(key));
 		}
 		currentScope = currentScope.parent;
@@ -90,12 +93,13 @@ public class jythonBaseListener implements jythonListener {
 	 */
 	@Override public void enterVarDec(jythonParser.VarDecContext ctx) {
 		String varName = ctx.ID().getText();
-		if(currentScope.table.contains(varName)) {
-			System.out.println("Error102: in line " + ctx.start.getLine() + ", " + varName + " has been defined already in "+ currentScope.table.get("className"));
+		if(currentScope.table.contains(new Pair<>(Kind.Variable, varName))) {
+			System.out.println("Error102: in line " + ctx.start.getLine() + ", " + varName + " has been defined already in "+ currentScope.table.get(new Pair<>(Kind.Class, "A")));
 			varName += "(Duplicate)";
 		}
 		String varType = ctx.type().getText();
-		currentScope.table.put(varType, varName);
+		Variable variable = new Variable(varType, varName);
+		currentScope.table.put(new Pair<>(Kind.Variable, varName), variable);
 	}
 	/**
 	 * {@inheritDoc}
