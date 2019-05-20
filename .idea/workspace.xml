@@ -2,53 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="25d199e1-b58e-404b-bdf3-b644a31f7d31" name="Default" comment="Classes added!">
-      <change afterPath="$PROJECT_DIR$/src/classes/Class.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/Kind.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/Method.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/Variable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/Compiler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/classes/SymbolTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/classes/SymbolTable.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonBaseListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonBaseListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonBaseVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonBaseVisitor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonLexer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonLexer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Add_subContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Add_subContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ArgsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ArgsContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ArrayDecContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ArrayDecContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$AssignmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$AssignmentContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Assignment_operatorsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Assignment_operatorsContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ClassDecContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ClassDecContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Class_bodyContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Class_bodyContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Condition_listContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Condition_listContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ConstructorContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ConstructorContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Eq_neqContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Eq_neqContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ExplistContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ExplistContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ExpressionContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ExpressionContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$For_statmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$For_statmentContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$If_else_statmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$If_else_statmentContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ImportclassContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ImportclassContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$JythonTypeContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$JythonTypeContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$LeftExpContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$LeftExpContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$MethodDecContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$MethodDecContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Method_callContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Method_callContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Mult_mod_divContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Mult_mod_divContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ParameterContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ParameterContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ParametersContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ParametersContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Print_statmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Print_statmentContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ProgramContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ProgramContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Relation_operatorsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Relation_operatorsContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Return_statmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Return_statmentContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$RightExpContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$RightExpContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$StatmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$StatmentContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$TypeContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$TypeContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$VarDecContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$VarDecContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$While_statmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$While_statmentContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonVisitor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/SymbolTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/SymbolTable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gen/jythonBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gen/jythonBaseListener.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -63,8 +18,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gen/jythonBaseListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="96" column="177" selection-start-line="96" selection-start-column="177" selection-end-line="96" selection-end-column="177" />
+            <state relative-caret-position="211">
+              <caret line="96" column="86" lean-forward="true" selection-start-line="96" selection-start-column="86" selection-end-line="96" selection-end-column="86" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -250,7 +205,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558379804266" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558380352207" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Project" />
@@ -323,12 +278,20 @@
       <updated>1558246359517</updated>
       <workItem from="1558246362398" duration="6041000" />
       <workItem from="1558254491357" duration="832000" />
-      <workItem from="1558302306697" duration="5319000" />
+      <workItem from="1558302306697" duration="5620000" />
     </task>
+    <task id="LOCAL-00001" summary="Classes added!">
+      <created>1558380058212</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1558380058213</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12192000" />
+    <option name="totallyTimeSpent" value="12493000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -344,14 +307,14 @@
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info anchor="bottom" id="Tool Output" order="1" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Messages" order="3" visible="true" weight="0.32887402" />
+      <window_info anchor="bottom" id="Messages" order="3" weight="0.32887402" />
       <window_info anchor="bottom" id="Database Changes" order="4" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="ANTLR Preview" order="6" weight="0.32965517" />
       <window_info anchor="bottom" id="Message" order="7" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.32998884" />
       <window_info anchor="bottom" id="Run" order="9" weight="0.32887402" />
-      <window_info anchor="bottom" id="Debug" order="10" weight="0.39910814" />
+      <window_info active="true" anchor="bottom" id="Debug" order="10" visible="true" weight="0.39910814" />
       <window_info anchor="bottom" id="Cvs" order="11" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="12" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="13" />
@@ -414,9 +377,9 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/gen/jythonBaseListener.java</url>
-          <line>94</line>
+          <line>95</line>
           <properties />
-          <option name="timeStamp" value="4" />
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -501,17 +464,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/Class.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-          <folding>
-            <element signature="e#116#117#0" expanded="true" />
-            <element signature="e#158#159#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/classes/Variable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
@@ -554,6 +506,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/Class.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
+          <folding>
+            <element signature="e#116#117#0" expanded="true" />
+            <element signature="e#158#159#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/javafx-src.zip!/javafx/util/Pair.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -565,10 +528,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/src.zip!/java/util/Hashtable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="296" selection-start-line="296" selection-end-line="296" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/gen/jythonBaseListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="96" column="177" selection-start-line="96" selection-start-column="177" selection-end-line="96" selection-end-column="177" />
+        <state relative-caret-position="211">
+          <caret line="96" column="86" lean-forward="true" selection-start-line="96" selection-start-column="86" selection-end-line="96" selection-end-column="86" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

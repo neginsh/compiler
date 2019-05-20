@@ -61,6 +61,7 @@ public class jythonBaseListener implements jythonListener {
 		currentScope.table.put(new Pair<>(Kind.Class, className), newClass);
 
 		currentScope = new SymbolTable(currentScope);
+		currentScope.table.put(new Pair<>(Kind.Class, "className"), className);
 		currentScope.table.put(new Pair<>(Kind.Class, className), newClass);
 	}
 	/**
@@ -93,8 +94,9 @@ public class jythonBaseListener implements jythonListener {
 	 */
 	@Override public void enterVarDec(jythonParser.VarDecContext ctx) {
 		String varName = ctx.ID().getText();
-		if(currentScope.table.contains(new Pair<>(Kind.Variable, varName))) {
-			System.out.println("Error102: in line " + ctx.start.getLine() + ", " + varName + " has been defined already in "+ currentScope.table.get(new Pair<>(Kind.Class, "A")));
+		if(currentScope.table.keySet().contains(new Pair<>(Kind.Variable, varName))) {
+			System.out.println("Error102: in line " + ctx.start.getLine() + ", " + varName + " has been defined already in "+
+					currentScope.table.get(new Pair<>(Kind.Class, "className")));
 			varName += "(Duplicate)";
 		}
 		String varType = ctx.type().getText();
