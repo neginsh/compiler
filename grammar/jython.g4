@@ -2,13 +2,13 @@
 
 grammar jython;
 
-program : importclass* (classDec)? ;
+program : importClass* (classDec)? ;
 
-importclass : ('import' USER_TYPE) ;
+importClass : ('import' USER_TYPE) ;
 
-classDec : 'class'  USER_TYPE ('(' USER_TYPE ')')? '{' class_body* '}' ;
+classDec : 'class'  USER_TYPE ('(' USER_TYPE ')')? '{' classBody* '}' ;
 
-class_body : varDec
+classBody : varDec
            | methodDec
            | constructor
            | arrayDec
@@ -18,7 +18,9 @@ varDec :   type  ID  ;
 
 arrayDec : type '['expression']' ID  ;
 
-methodDec : 'def'  (type|'void'|type '['']')   ID  '(' parameters* ')''{' ( statment)* '}';
+methodDec : 'def' returnType  ID  '(' parameters* ')''{' ( statment)* '}';
+
+returnType : type|'void'|type '['']' ;
 
 constructor : 'def'  USER_TYPE '(' parameters* ')''{' ( statment)* '}' ;
 
@@ -27,34 +29,34 @@ parameter : (varDec | arrayDec);
 parameters : parameter (',' parameter)* ;
 
 statment :
-          while_statment
-         | if_else_statment
-         | for_statment
+          whileStatment
+         | ifElseStatment
+         | forStatment
          | varDec
          | assignment
-         | print_statment
-         | method_call
-         | return_statment
+         | printStatment
+         | methodCall
+         | returnStatment
          | arrayDec
          ;
 
-return_statment : 'return'  expression ;
+returnStatment : 'return'  expression ;
 
-condition_list : expression (('or'|'and')  expression)* ;
+conditionList : expression (('or'|'and')  expression)* ;
 
-while_statment : 'while' '(' condition_list ')' '{' statment* '}' ;
+whileStatment : 'while' '(' conditionList ')' '{' statment* '}' ;
 
-if_else_statment :'if' '(' condition_list ')' '{' statment* '}'
-                 ('elif' '(' condition_list ')' '{' statment* '}')*
+ifElseStatment :'if' '(' conditionList ')' '{' statment* '}'
+                 ('elif' '(' conditionList ')' '{' statment* '}')*
                  ('else' '{' statment* '}')?  ;
 
-print_statment : 'print' '('  expression ')' ;
+printStatment : 'print' '('  expression ')' ;
 
-for_statment : 'for' ID 'in' leftExp '{' statment* '}'
+forStatment : 'for' ID 'in' leftExp '{' statment* '}'
              | 'for' ID 'in' 'range''('expression (',' expression)? (',' expression)? ')' '{' statment* '}'
              ;
 
-method_call : 'self' '.' method_call
+methodCall : 'self' '.' methodCall
             | ID args
             | leftExp '.' ID args;
 

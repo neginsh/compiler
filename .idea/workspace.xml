@@ -1,10 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="25d199e1-b58e-404b-bdf3-b644a31f7d31" name="Default" comment="Classes added!">
+    <list default="true" id="25d199e1-b58e-404b-bdf3-b644a31f7d31" name="Default" comment="duplicate attribute problem solved.">
+      <change afterPath="$PROJECT_DIR$/src/inputs/input2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grammar/jython.g4" beforeDir="false" afterPath="$PROJECT_DIR$/grammar/jython.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/Compiler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonBaseListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonBaseListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gen/jythonBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gen/jythonBaseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonBaseVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonBaseVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Add_subContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Add_subContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ArgsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ArgsContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$AssignmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$AssignmentContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Assignment_operatorsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Assignment_operatorsContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ClassDecContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ClassDecContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Class_bodyContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Condition_listContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ConstructorContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ConstructorContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Eq_neqContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Eq_neqContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ExplistContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ExplistContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ExpressionContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ExpressionContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$For_statmentContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$If_else_statmentContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ImportclassContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ImportclassContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$JythonTypeContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$JythonTypeContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$LeftExpContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$LeftExpContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$MethodDecContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$MethodDecContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Method_callContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Mult_mod_divContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Mult_mod_divContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ParameterContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ParameterContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ParametersContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ParametersContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Print_statmentContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ProgramContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$ProgramContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Relation_operatorsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Relation_operatorsContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$Return_statmentContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$RightExpContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$RightExpContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$StatmentContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$StatmentContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$TypeContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$TypeContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser$While_statmentContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JythonCompiler/gen/jythonVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/JythonCompiler/input/codes.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/Class.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Class.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/Method.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Method.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/Variable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Variable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gen/jython.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gen/jythonBaseListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gen/jythonBaseVisitor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gen/jythonLexer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gen/jythonLexer.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gen/jythonListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gen/jythonParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gen/jythonVisitor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/input/codes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputs/input1.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,26 +64,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/gen/jythonBaseListener.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grammar/jython.g4">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="96" column="86" lean-forward="true" selection-start-line="96" selection-start-column="86" selection-end-line="96" selection-end-column="86" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="124">
+              <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/javafx-src.zip!/javafx/util/Pair.java">
+        <entry file="file://$PROJECT_DIR$/src/gen/jythonBaseListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="66" selection-start-line="66" selection-end-line="66" />
+            <state>
+              <caret line="51" column="54" lean-forward="true" selection-start-line="51" selection-start-column="54" selection-end-line="51" selection-end-column="54" />
               <folding>
-                <element signature="e#1415#1416#0" expanded="true" />
-                <element signature="e#1455#1456#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#689#690#0" expanded="true" />
+                <element signature="e#728#729#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -52,8 +99,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/classes/Class.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
+            <state relative-caret-position="124">
+              <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
               <folding>
                 <element signature="e#116#117#0" expanded="true" />
                 <element signature="e#158#159#0" expanded="true" />
@@ -63,27 +110,23 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/classes/Method.java">
+        <entry file="file://$PROJECT_DIR$/src/classes/Variable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+            <state relative-caret-position="124">
+              <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="25" />
               <folding>
-                <element signature="e#141#142#0" expanded="true" />
-                <element signature="e#185#186#0" expanded="true" />
+                <element signature="e#223#224#0" expanded="true" />
+                <element signature="e#289#290#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/classes/Variable.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/classes/Method.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="12" column="58" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
-              <folding>
-                <element signature="e#223#224#0" expanded="true" />
-                <element signature="e#289#290#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="155">
+              <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -103,8 +146,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Compiler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="12" column="166" selection-start-line="12" selection-start-column="166" selection-end-line="12" selection-end-column="166" />
+            <state relative-caret-position="200">
+              <caret line="17" column="57" selection-start-line="17" selection-start-column="57" selection-end-line="17" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -113,10 +156,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/input/codes.txt">
+        <entry file="file://$PROJECT_DIR$/src/inputs/input2.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62">
-              <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
+            <state>
+              <caret column="9" selection-start-column="9" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/inputs/input1.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="124">
+              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
@@ -139,15 +191,17 @@
       <list>
         <option value="$PROJECT_DIR$/src/codes.txt" />
         <option value="$PROJECT_DIR$/src/gen/jythonParser.java" />
-        <option value="$PROJECT_DIR$/grammar/jython.g4" />
         <option value="$PROJECT_DIR$/src/classes/Kind.java" />
-        <option value="$PROJECT_DIR$/src/classes/Method.java" />
         <option value="$PROJECT_DIR$/src/classes/SymbolTable.java" />
-        <option value="$PROJECT_DIR$/src/Compiler.java" />
-        <option value="$PROJECT_DIR$/src/classes/Class.java" />
-        <option value="$PROJECT_DIR$/src/classes/Variable.java" />
         <option value="$PROJECT_DIR$/src/input/codes.txt" />
+        <option value="$PROJECT_DIR$/grammar/jython.g4" />
+        <option value="$PROJECT_DIR$/src/inputs/input2.txt" />
+        <option value="$PROJECT_DIR$/src/Compiler.java" />
         <option value="$PROJECT_DIR$/src/gen/jythonBaseListener.java" />
+        <option value="$PROJECT_DIR$/src/inputs/input1.txt" />
+        <option value="$PROJECT_DIR$/src/classes/Variable.java" />
+        <option value="$PROJECT_DIR$/src/classes/Class.java" />
+        <option value="$PROJECT_DIR$/src/classes/Method.java" />
       </list>
     </option>
   </component>
@@ -174,6 +228,11 @@
             <path>
               <item name="compiler" type="b2602c69:ProjectViewProjectNode" />
               <item name="compiler" type="462c0819:PsiDirectoryNode" />
+              <item name="grammar" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="compiler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="compiler" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -192,7 +251,7 @@
               <item name="compiler" type="b2602c69:ProjectViewProjectNode" />
               <item name="compiler" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="input" type="462c0819:PsiDirectoryNode" />
+              <item name="inputs" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -205,7 +264,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558380352207" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558422587522" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Project" />
@@ -214,6 +273,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Files\College Files\Session 6\Compiler\Project\Phase 2\JythonCompiler\compiler\src" />
       <recent name="C:\Users\negin\Downloads\Compressed\JythonCompiler\JythonCompiler\src" />
       <recent name="C:\Users\negin\Downloads\Compressed\JythonCompiler\JythonCompiler\src\input" />
     </key>
@@ -278,7 +338,7 @@
       <updated>1558246359517</updated>
       <workItem from="1558246362398" duration="6041000" />
       <workItem from="1558254491357" duration="832000" />
-      <workItem from="1558302306697" duration="5620000" />
+      <workItem from="1558302306697" duration="10216000" />
     </task>
     <task id="LOCAL-00001" summary="Classes added!">
       <created>1558380058212</created>
@@ -287,21 +347,28 @@
       <option name="project" value="LOCAL" />
       <updated>1558380058213</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="duplicate attribute problem solved.">
+      <created>1558380421385</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1558380421385</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12493000" />
+    <option name="totallyTimeSpent" value="17089000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="Capture Tool" order="3" />
-      <window_info content_ui="combo" id="Project" order="4" visible="true" weight="0.25546667" />
+      <window_info active="true" content_ui="combo" id="Project" order="4" visible="true" weight="0.25546667" />
       <window_info id="Image Layers" order="5" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" />
@@ -313,8 +380,8 @@
       <window_info anchor="bottom" id="ANTLR Preview" order="6" weight="0.32965517" />
       <window_info anchor="bottom" id="Message" order="7" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.32998884" />
-      <window_info anchor="bottom" id="Run" order="9" weight="0.32887402" />
-      <window_info active="true" anchor="bottom" id="Debug" order="10" visible="true" weight="0.39910814" />
+      <window_info anchor="bottom" id="Run" order="9" visible="true" weight="0.32887402" />
+      <window_info anchor="bottom" id="Debug" order="10" weight="0.39910814" />
       <window_info anchor="bottom" id="Cvs" order="11" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="12" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="13" />
@@ -370,24 +437,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Classes added!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Classes added!" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/gen/jythonBaseListener.java</url>
-          <line>95</line>
-          <properties />
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="duplicate attribute problem solved." />
+    <option name="LAST_COMMIT_MESSAGE" value="duplicate attribute problem solved." />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/gen/jython.tokens">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gen/jythonBaseVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -412,13 +465,6 @@
     <entry file="file://$PROJECT_DIR$/src/gen/jythonLexer.tokens">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gen/jythonListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="22" column="25" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../Telegram Desktop/jythonParser.java" />
     <entry file="file://$PROJECT_DIR$/src/codes.txt" />
     <entry file="file://$PROJECT_DIR$/out/production/JythonCompiler/codes.txt" />
@@ -429,31 +475,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grammar/jython.g4">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="13" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/Kind.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/Method.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-          <folding>
-            <element signature="e#141#142#0" expanded="true" />
-            <element signature="e#185#186#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/classes/SymbolTable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="217">
@@ -461,34 +482,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/Variable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="12" column="58" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
-          <folding>
-            <element signature="e#223#224#0" expanded="true" />
-            <element signature="e#289#290#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Compiler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="12" column="166" selection-start-line="12" selection-start-column="166" selection-end-line="12" selection-end-column="166" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/input/codes.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -503,17 +496,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret line="1901" selection-start-line="1901" selection-end-line="1901" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/classes/Class.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-          <folding>
-            <element signature="e#116#117#0" expanded="true" />
-            <element signature="e#158#159#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -535,13 +517,92 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gen/jythonBaseListener.java">
+    <entry file="file://$PROJECT_DIR$/src/classes/Kind.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="96" column="86" lean-forward="true" selection-start-line="96" selection-start-column="86" selection-end-line="96" selection-end-column="86" />
+        <state relative-caret-position="93">
+          <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gen/jython.tokens">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grammar/jython.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gen/jythonListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Compiler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="17" column="57" selection-start-line="17" selection-start-column="57" selection-end-line="17" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gen/jythonBaseListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="51" column="54" lean-forward="true" selection-start-line="51" selection-start-column="54" selection-end-line="51" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#689#690#0" expanded="true" />
+            <element signature="e#728#729#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/inputs/input2.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="9" selection-start-column="9" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/inputs/input1.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/Class.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
+          <folding>
+            <element signature="e#116#117#0" expanded="true" />
+            <element signature="e#158#159#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/Variable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="25" />
+          <folding>
+            <element signature="e#223#224#0" expanded="true" />
+            <element signature="e#289#290#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/classes/Method.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
         </state>
       </provider>
     </entry>

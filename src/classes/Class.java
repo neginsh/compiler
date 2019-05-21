@@ -2,6 +2,7 @@ package classes;
 
 public class Class {
     public String name, parentName;
+    public boolean misty;
 
     public Class(String name) {
         this.name = name;

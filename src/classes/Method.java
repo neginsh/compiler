@@ -3,6 +3,7 @@ package classes;
 public class Method {
     public String name;
     public Variable[] variables;
+    public boolean misty;
 
     public Method(String name) {
         this.name = name;
