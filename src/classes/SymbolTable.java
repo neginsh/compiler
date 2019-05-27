@@ -15,4 +15,5 @@ public class SymbolTable {
         this.parent = parent;
         this.table = new Hashtable<>();
     }
+
 }

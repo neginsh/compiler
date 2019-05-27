@@ -16,9 +16,9 @@ classBody : varDec
 
 varDec :   type  ID  ;
 
-arrayDec : type '['expression']' ID  ;
+arrayDec : type '[' expression? ']' ID  ;
 
-methodDec : 'def' returnType  ID  '(' parameters* ')''{' ( statment)* '}';
+methodDec : 'def' returnType  ID  '(' parameters? ')''{' ( statment)* '}';
 
 returnType : type|'void'|type '['']' ;
 

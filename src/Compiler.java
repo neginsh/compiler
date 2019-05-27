@@ -12,7 +12,7 @@ import gen.*;
 public class Compiler {
 
     public static void main(String[] args) throws IOException{
-        final File folder = new File("./src/inputs");
+        final File folder = new File("compiler/src/inputs");
         SymbolTable table = new SymbolTable();
         for (final File fileEntry : folder.listFiles()) {
             CharStream stream = CharStreams.fromFileName(fileEntry.getAbsolutePath());

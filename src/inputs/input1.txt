@@ -1,4 +1,12 @@
 class B {
     int a
+
+    def int met(int s, float[4] b) {
+
+    }
+
+    def int met(int a, float[6] c) {
+
+    }
 }
 
