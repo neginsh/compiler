@@ -18,60 +18,60 @@ varDec :   type  ID  ;
 
 arrayDec : type '[' expression? ']' ID  ;
 
-methodDec : 'def' returnType  ID  '(' parameters? ')''{' ( statment)* '}';
+methodDec : 'def' returnType  ID  '(' parameters? ')''{' ( statement)* '}';
 
 returnType : type|'void'|type '['']' ;
 
-constructor : 'def'  USER_TYPE '(' parameters* ')''{' ( statment)* '}' ;
+constructor : 'def'  USER_TYPE '(' parameters* ')''{' ( statement)* '}' ;
 
 parameter : (varDec | arrayDec);
 
 parameters : parameter (',' parameter)* ;
 
-statment :
-          whileStatment
-         | ifElseStatment
-         | forStatment
+statement :
+          whileStatement
+         | ifElseStatement
+         | forStatement
          | varDec
          | assignment
-         | printStatment
+         | printStatement
          | methodCall
-         | returnStatment
+         | returnStatement
          | arrayDec
          ;
 
-returnStatment : 'return'  expression ;
+returnStatement : 'return'  expression ;
 
 conditionList : expression (('or'|'and')  expression)* ;
 
-whileStatment : 'while' '(' conditionList ')' '{' statment* '}' ;
+whileStatement : 'while' '(' conditionList ')' '{' statement* '}' ;
 
-ifElseStatment :'if' '(' conditionList ')' '{' statment* '}'
-                 ('elif' '(' conditionList ')' '{' statment* '}')*
-                 ('else' '{' statment* '}')?  ;
+ifElseStatement :'if' '(' conditionList ')' '{' statement* '}'
+                 ('elif' '(' conditionList ')' '{' statement* '}')*
+                 ('else' '{' statement* '}')?  ;
 
-printStatment : 'print' '('  expression ')' ;
+printStatement : 'print' '('  expression ')' ;
 
-forStatment : 'for' ID 'in' leftExp '{' statment* '}'
-             | 'for' ID 'in' 'range''('expression (',' expression)? (',' expression)? ')' '{' statment* '}'
+forStatement : 'for' ID 'in' leftExp '{' statement* '}'
+             | 'for' ID 'in' 'range''('expression (',' expression)? (',' expression)? ')' '{' statement* '}'
              ;
 
 methodCall : 'self' '.' methodCall
             | ID args
             | leftExp '.' ID args;
 
-assignment  : leftExp assignment_operators  expression
-            | varDec assignment_operators  expression
+assignment  : leftExp assignmentOperators  expression
+            | varDec assignmentOperators  expression
             | arrayDec '='  type '('')' ('['expression']')
             | leftExp '=' type '(' ')' ('['expression']')
             ;
 
 
 expression  :
-              expression mult_mod_div expression
-            | expression add_sub expression
-            | expression eq_neq  expression
-            | expression relation_operators expression
+              expression multModDiv expression
+            | expression addSub expression
+            | expression eqNeq  expression
+            | expression relationOperators expression
             | rightExp
             ;
 
@@ -93,15 +93,15 @@ leftExp :    ID
           |  leftExp '.' ID args
           |  'self' '.' leftExp  ;
 
-args :  '(' (explist)? ')' ;
-explist  :  expression (',' expression)*;
+args :  '(' (expList)? ')' ;
+expList  :  expression (',' expression)*;
 
 
-assignment_operators : '=' | '+=' | '-=' | '*=' | '/=' ;
-eq_neq               : '==' | '!=' ;
-relation_operators   : '>' | '<' | '>=' | '<=';
-add_sub              : '+' | '-';
-mult_mod_div         : '*' | '/' | '%';
+assignmentOperators : '=' | '+=' | '-=' | '*=' | '/=' ;
+eqNeq               : '==' | '!=' ;
+relationOperators   : '>' | '<' | '>=' | '<=';
+addSub              : '+' | '-';
+multModDiv         : '*' | '/' | '%';
 type                 : jythonType | USER_TYPE ;
 USER_TYPE            : UpperCaseChar (LowerCaseChar|UpperCaseChar|DIGIT|'_')*  ;
 jythonType           : 'float'|'int'|'bool'|'string';

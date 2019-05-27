@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import gen.*;
 
+@SuppressWarnings("Duplicates")
 public class Compiler {
 
     public static void main(String[] args) throws IOException{
@@ -22,6 +23,16 @@ public class Compiler {
             ParseTree tree = parser.program();
             ParseTreeWalker walker = new ParseTreeWalker();
             jythonListener listener = new jythonBaseListener(table);
+            walker.walk(listener, tree);
+        }
+        for (final File fileEntry : folder.listFiles()) {
+            CharStream stream = CharStreams.fromFileName(fileEntry.getAbsolutePath());
+            jythonLexer lexer = new jythonLexer(stream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            jythonParser parser = new jythonParser(tokens);
+            ParseTree tree = parser.program();
+            ParseTreeWalker walker = new ParseTreeWalker();
+            jythonListener listener = new checkJythonListener(table);
             walker.walk(listener, tree);
         }
     }

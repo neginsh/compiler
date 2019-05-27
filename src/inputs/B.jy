@@ -1,0 +1,16 @@
+class B(C) {
+    int a
+
+    def int met(int s, float[4] b) {
+        hi()
+    }
+
+    def void main() {
+
+    }
+
+    def void hi() {
+
+    }
+}
+

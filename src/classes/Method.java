@@ -1,10 +1,9 @@
 package classes;
 
-public class Method {
+public class Method extends MyObject {
     public String returnType;
     public String name;
     public Variable[] variables;
-    public boolean misty;
 
     public Method(String name) {
         this.name = name;

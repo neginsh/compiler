@@ -1,8 +1,7 @@
 package classes;
 
-public class Variable {
+public class Variable extends MyObject {
     public String type, name;
-    public boolean misty;
 
     public Variable(String type, String name) {
         this.type = type;
