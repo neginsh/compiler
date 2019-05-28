@@ -72,6 +72,7 @@ public class checkJythonListener extends jythonBaseListener {
 
     private void checkParent(String parentName) {
         Class parentClass = (Class) currentScope.table.get(new Pair<>(Kind.Class, parentName));
+        Class currentClass = thisClass;
         if (parentClass.misty) {
             System.out.println("Error106 : in line " + parentClass.line + " , cannot find class " + parentName);
         } else {
@@ -79,7 +80,7 @@ public class checkJythonListener extends jythonBaseListener {
             thisClass.symbolTable.parent = parentClass.symbolTable;
 
             ArrayList<Class> inherit = new ArrayList<>();
-            while (parentClass.parent != null) {
+            while (parentClass != null) {
                 if (thisClass.name.equals(parentClass.name)) {
                     System.out.print("Error107 : Invalid inheritance " + thisClass.name);
                     inherit.add(parentClass);
@@ -89,6 +90,11 @@ public class checkJythonListener extends jythonBaseListener {
                     break;
                 } else {
                     inherit.add(parentClass);
+                    currentClass.parent = parentClass;
+                    currentClass.symbolTable.parent = parentClass.symbolTable;
+                    currentClass = parentClass;
+                    if (parentClass.parent == null)
+                        break;
                     parentClass = (Class) root.table.get(new Pair<>(Kind.Class, parentClass.parent.name));
                 }
             }
@@ -383,9 +389,25 @@ public class checkJythonListener extends jythonBaseListener {
      *
      * <p>The default implementation does nothing.</p>
      */
+    @SuppressWarnings("Duplicates")
     @Override
     public void enterMethodCall(jythonParser.MethodCallContext ctx) {
-//        System.out.println("Error 105 : in line " + ctx.start.getLine() + ", Can not find method " + methodName);
+        if (ctx.leftExp() == null) {
+            String methodName = ctx.ID().getText();
+            boolean find = false;
+            SymbolTable classTable = thisClass.symbolTable;
+            while (classTable.parent != null && !find) {
+                if (classTable.table.keySet().contains(new Pair<>(Kind.Method, methodName)))
+                    find = true;
+                else
+                    classTable = classTable.parent;
+            }
+            if (!find) {
+                classTable.table.remove(new Pair<>(Kind.Method, methodName));
+                System.out.println("Error 105 : in line " + ctx.start.getLine() + ", Can not find method " + methodName);
+            }
+        }
+
     }
 
     /**

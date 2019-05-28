@@ -2,6 +2,6 @@ class A(B) {
     C c
 
     def void main () {
-
+        some()
     }
 }

@@ -1,3 +1,10 @@
-class C(A) {
+class C {
 
+    def int some() {
+
+    }
+
+    def void main() {
+
+    }
 }
