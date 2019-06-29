@@ -1,9 +1,12 @@
 package classes;
 
+import java.util.ArrayList;
+
 public class Method extends MyObject {
     public String returnType;
     public String name;
     public Variable[] variables;
+    public ArrayList<Method> sameNames;
 
     public Method(String name) {
         this.name = name;
@@ -40,5 +43,11 @@ public class Method extends MyObject {
             string.delete(string.length() - 3, string.length());
         }
         return string.append("}").toString();
+    }
+
+    public void addSameName(Method method) {
+        if (sameNames == null)
+            sameNames = new ArrayList<>();
+        sameNames.add(method);
     }
 }

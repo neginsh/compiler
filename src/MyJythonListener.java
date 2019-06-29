@@ -1,22 +1,26 @@
-package gen;// Generated from E:/Files/College Files/Session 6/Compiler/Project/Phase 2/JythonCompiler/compiler/grammar\jython.g4 by ANTLR 4.7
-
-import classes.*;
 import classes.Class;
+import classes.*;
+import gen.jythonListener;
+import gen.jythonParser;
 import javafx.util.Pair;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
+
+import java.util.Arrays;
+
 
 /**
  * This class provides an empty implementation of {@link jythonListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class jythonBaseListener implements jythonListener {
+public class MyJythonListener implements jythonListener {
+    public String[] primitiveTypes = {"int", "float", "bool", "string"};
     public SymbolTable currentScope, root;
     public Class thisClass;
 
-    public jythonBaseListener(SymbolTable currentScope) {
+    public MyJythonListener(SymbolTable currentScope) {
         this.currentScope = currentScope;
         this.root = currentScope;
     }
@@ -65,9 +69,11 @@ public class jythonBaseListener implements jythonListener {
     @Override
     public void enterClassDec(jythonParser.ClassDecContext ctx) {
         String className = ctx.USER_TYPE(0).getText();
-        if (currentScope.table.keySet().contains(new Pair<>(Kind.Class, className))) {
+        boolean mistyClass = false;
+        if (currentScope.table.containsKey(new Pair<>(Kind.Class, className))) {
             Class parentClass = (Class) currentScope.table.get(new Pair<>(Kind.Class, className));
-            if (parentClass.misty) {
+            mistyClass = parentClass.misty;
+            if (mistyClass) {
                 currentScope.table.remove(new Pair<>(Kind.Class, className));
             } else {
                 System.out.println("Error101: in line " + ctx.start.getLine() + ", " + className + " has been defined already");
@@ -82,22 +88,31 @@ public class jythonBaseListener implements jythonListener {
             if (className.equals(parentName)) {
                 System.out.println("Error107 : Invalid inheritance " + className + " -> " + parentName);
             }
-            if (currentScope.table.keySet().contains(new Pair<>(Kind.Class, parentName))) {
+            else if (currentScope.table.containsKey(new Pair<>(Kind.Class, parentName))) {
                 parentClass = (Class) currentScope.table.get(new Pair<>(Kind.Class, parentName));
                 newClass.parent = parentClass;
             } else {
                 parentClass = new Class(parentName);
-                currentScope.table.put(new Pair<>(Kind.Class, parentName), parentClass);
                 parentClass.misty = true;
+                newClass.parent = parentClass;
+                currentScope.table.put(new Pair<>(Kind.Class, parentName), parentClass);
             }
         }
 
         currentScope.table.put(new Pair<>(Kind.Class, className), newClass);
-        if (parentClass != null) {
+        if (parentClass != null && !parentClass.misty) {
             SymbolTable parentTable = parentClass.symbolTable;
             currentScope = new SymbolTable(parentTable);
         } else {
             currentScope = new SymbolTable(currentScope);
+        }
+
+        if (mistyClass) { // set parent for classes witch extends from this class
+            for (Object thisObj : root.table.values()) {
+                Class thisClass = (Class) thisObj;
+                if (thisClass.parent != null && thisClass.parent.name.equals(className))
+                    thisClass.parent = newClass;
+            }
         }
 
         newClass.symbolTable = currentScope;
@@ -122,10 +137,7 @@ public class jythonBaseListener implements jythonListener {
             if (object.getClass() != String.class) {
                 MyObject myObject = (MyObject) object;
                 if (myObject.misty) {
-                    if (key.getKey() == Kind.Method) {
-                        Method method = (Method) myObject;
-                        System.out.println("Error 105 : in line " + method.line + ", Can not find method " + method.name);
-                    }
+
                 } else
                     System.out.println(key + " : " + currentScope.table.get(key));
             }
@@ -168,8 +180,18 @@ public class jythonBaseListener implements jythonListener {
                     currentScope.table.get(new Pair<>(Kind.Class, "className")));
             varName += "(duplicate " + ctx.start.getLine() + ")";
         }
+
         String varType = ctx.type().getText();
         Variable variable = new Variable(varType, varName);
+        if (!Arrays.asList(primitiveTypes).contains(varType)) {
+            if (!root.table.containsKey(new Pair<>(Kind.Class, varType)))
+                variable.misty = true;
+            else {
+                Class varClass = (Class) root.table.get(new Pair<>(Kind.Class, varType));
+                if (varClass.misty)
+                    variable.misty = true;
+            }
+        }
         currentScope.table.put(new Pair<>(Kind.Variable, varName), variable);
     }
 
@@ -196,9 +218,19 @@ public class jythonBaseListener implements jythonListener {
                     currentScope.table.get(new Pair<>(Kind.Class, "className")));
             arrayName += "(duplicate " + ctx.start.getLine() + ")";
         }
+
         String arrayType = ctx.type().getText() + "[]";
         String size = ctx.expression().getText();
         Array array = new Array(arrayType, arrayName, size);
+        if (!Arrays.asList(primitiveTypes).contains(arrayType)) {
+            if (!root.table.containsKey(new Pair<>(Kind.Class, arrayType)))
+                array.misty = true;
+            else {
+                Class varClass = (Class) root.table.get(new Pair<>(Kind.Class, arrayType));
+                if (varClass.misty)
+                    array.misty = true;
+            }
+        }
         currentScope.table.put(new Pair<>(Kind.Variable, arrayName), array);
     }
 
@@ -245,6 +277,8 @@ public class jythonBaseListener implements jythonListener {
         method.returnType = returnType;
         method.variables = variables;
 
+        boolean sameName = false;
+
         if (currentScope.table.keySet().contains(new Pair<>(Kind.Method, methodName))) {
             Method anotherMethod = (Method) currentScope.table.get(new Pair<>(Kind.Method, methodName));
             if (anotherMethod.misty) {
@@ -254,12 +288,17 @@ public class jythonBaseListener implements jythonListener {
                 System.out.println("Error102: in line " + ctx.start.getLine() + ", " + methodName + " has been defined already in " + className);
                 methodName += "(duplicate " + ctx.start.getLine() + ")";
             } else {
-                methodName += ctx.start.getLine();
+                sameName = true;
             }
         }
-        currentScope.table.put(new Pair<>(Kind.Method, methodName), method);
-        currentScope = new SymbolTable(currentScope);
+        if (!sameName)
+            currentScope.table.put(new Pair<>(Kind.Method, methodName), method);
+        else {
+            Method anotherMethod = (Method) currentScope.table.get(new Pair<>(Kind.Method, methodName));
+            anotherMethod.addSameName(method);
+        }
 
+        currentScope = new SymbolTable(currentScope);
         method.symbolTable = currentScope;
         currentScope.table.put(new Pair<>(Kind.Method, "methodName"), methodName);
     }
@@ -491,23 +530,23 @@ public class jythonBaseListener implements jythonListener {
     @SuppressWarnings("Duplicates")
     @Override
     public void enterMethodCall(jythonParser.MethodCallContext ctx) {
-        if (ctx.leftExp() == null) {
-            String methodName = ctx.ID().getText();
-            boolean find = false;
-            SymbolTable classTable = thisClass.symbolTable;
-            while (classTable.parent != null && !find) {
-                if (classTable.table.keySet().contains(new Pair<>(Kind.Method, methodName)))
-                    find = true;
-                else
-                    classTable = classTable.parent;
-            }
-            if (!find) {
-                Method method = new Method(methodName);
-                method.misty = true;
-                method.line = ctx.start.getLine();
-                currentScope.table.put(new Pair<>(Kind.Method, methodName), method);
-            }
-        }
+//        if (ctx.leftExp() == null) {
+//            String methodName = ctx.ID().getText();
+//            boolean find = false;
+//            SymbolTable classTable = thisClass.symbolTable;
+//            while (classTable.parent != null && !find) {
+//                if (classTable.table.keySet().contains(new Pair<>(Kind.Method, methodName)))
+//                    find = true;
+//                else
+//                    classTable = classTable.parent;
+//            }
+//            if (!find) {
+//                Method method = new Method(methodName);
+//                method.misty = true;
+//                method.line = ctx.start.getLine();
+//                currentScope.table.put(new Pair<>(Kind.Method, methodName), method);
+//            }
+//        }
     }
 
     /**
@@ -580,6 +619,7 @@ public class jythonBaseListener implements jythonListener {
      */
     @Override
     public void enterLeftExp(jythonParser.LeftExpContext ctx) {
+
     }
 
     /**
@@ -726,7 +766,7 @@ public class jythonBaseListener implements jythonListener {
     public void enterType(jythonParser.TypeContext ctx) {
         if (ctx.jythonType() == null) { // user type
             String type = ctx.USER_TYPE().getText();
-            if (!root.table.contains(new Pair<>(Kind.Class, type))) {
+            if (!root.table.containsKey(new Pair<>(Kind.Class, type))) {
                 Class newClass = new Class(type);
                 newClass.misty = true;
                 newClass.line = ctx.start.getLine();

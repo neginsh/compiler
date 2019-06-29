@@ -13,7 +13,7 @@ import gen.*;
 public class Compiler {
 
     public static void main(String[] args) throws IOException{
-        final File folder = new File("compiler/src/inputs");
+        final File folder = new File("src/inputs");
         SymbolTable table = new SymbolTable();
         for (final File fileEntry : folder.listFiles()) {
             CharStream stream = CharStreams.fromFileName(fileEntry.getAbsolutePath());
@@ -22,7 +22,7 @@ public class Compiler {
             jythonParser parser = new jythonParser(tokens);
             ParseTree tree = parser.program();
             ParseTreeWalker walker = new ParseTreeWalker();
-            jythonListener listener = new jythonBaseListener(table);
+            jythonListener listener = new MyJythonListener(table);
             walker.walk(listener, tree);
         }
         for (final File fileEntry : folder.listFiles()) {

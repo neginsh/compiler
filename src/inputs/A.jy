@@ -1,7 +1,7 @@
 class A(B) {
-    C c
+    C cc
 
     def void main () {
-        some()
+        self.cc.some(a.b - t() + d[self.f.a/2].hi(c[a.z * q] - c + 0)).bb[6] = 4
     }
 }

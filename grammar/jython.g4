@@ -1,10 +1,8 @@
-// by najme_habibi
-
 grammar jython;
 
 program : importClass* (classDec)? ;
 
-importClass : ('import' USER_TYPE) ;
+importClass : 'import' USER_TYPE ;
 
 classDec : 'class'  USER_TYPE ('(' USER_TYPE ')')? '{' classBody* '}' ;
 
@@ -28,8 +26,7 @@ parameter : (varDec | arrayDec);
 
 parameters : parameter (',' parameter)* ;
 
-statement :
-          whileStatement
+statement :whileStatement
          | ifElseStatement
          | forStatement
          | varDec
@@ -67,8 +64,7 @@ assignment  : leftExp assignmentOperators  expression
             ;
 
 
-expression  :
-              expression multModDiv expression
+expression  : expression multModDiv expression
             | expression addSub expression
             | expression eqNeq  expression
             | expression relationOperators expression
@@ -85,16 +81,18 @@ rightExp :
             | leftExp
             ;
 
-leftExp :    ID
-          |  '(' expression')'
-          |  ID args
-          |  leftExp '[' expression ']'
-          |  leftExp '.' ID
-          |  leftExp '.' ID args
-          |  'self' '.' leftExp  ;
+leftExp :  '(' expression')'
+        |  ID
+        |  ID args
+        |  leftExp '[' expression ']'
+        |  leftExp '.' ID
+        |  leftExp '.' ID args
+        |  'self' '.' leftExp  ;
+
+//leftExp :  ( ('self' '.')? (ID | ID args | ID '[' expression ']' | ('(' expression ')')) ('.' (ID | ID args | ID '[' expression ']'))* ) ;
 
 args :  '(' (expList)? ')' ;
-expList  :  expression (',' expression)*;
+expList  :  expression (',' expression)* ;
 
 
 assignmentOperators : '=' | '+=' | '-=' | '*=' | '/=' ;

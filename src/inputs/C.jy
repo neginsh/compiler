@@ -1,4 +1,6 @@
 class C {
+    int a
+    B[7] bb
 
     def int some() {
 
