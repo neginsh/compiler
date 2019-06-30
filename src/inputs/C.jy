@@ -1,5 +1,5 @@
 class C {
-    int a
+    int c
     B[7] bb
 
     def B some() {

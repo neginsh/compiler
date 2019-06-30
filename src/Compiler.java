@@ -32,7 +32,7 @@ public class Compiler {
             jythonParser parser = new jythonParser(tokens);
             ParseTree tree = parser.program();
             ParseTreeWalker walker = new ParseTreeWalker();
-            jythonListener listener = new checkJythonListener(table);
+            jythonListener listener = new CheckJythonListener(table);
             walker.walk(listener, tree);
         }
     }

@@ -1,5 +1,5 @@
 package classes;
 
 public enum Kind {
-    Class, Method, Variable
+    Class, Method, Variable, Scope
 }

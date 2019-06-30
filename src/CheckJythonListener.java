@@ -15,14 +15,12 @@ import java.util.Arrays;
  * of the available methods.
  */
 
-public class checkJythonListener extends MyJythonListener {
-    private SymbolTable currentTable;
+public class CheckJythonListener extends MyJythonListener {
     private LastVariable lastVariable;
 
-    public checkJythonListener(SymbolTable currentScope)
+    public CheckJythonListener(SymbolTable currentScope)
     {
         super(currentScope);
-        currentTable = currentScope;
         lastVariable = new LastVariable();
     }
 
@@ -117,6 +115,7 @@ public class checkJythonListener extends MyJythonListener {
     @Override
     public void exitClassDec(jythonParser.ClassDecContext ctx) {
         thisClass = null;
+        currentScope = currentScope.parent;
     }
 
     /**
@@ -203,7 +202,9 @@ public class checkJythonListener extends MyJythonListener {
      */
     @Override
     public void enterMethodDec(jythonParser.MethodDecContext ctx) {
-
+        String methodName = ctx.ID().getText();
+        Method method = (Method) currentScope.table.get(new Pair<>(Kind.Method, methodName));
+        currentScope = method.symbolTable;
     }
 
     /**
@@ -213,6 +214,7 @@ public class checkJythonListener extends MyJythonListener {
      */
     @Override
     public void exitMethodDec(jythonParser.MethodDecContext ctx) {
+        currentScope = currentScope.parent;
     }
 
     /**
@@ -322,13 +324,13 @@ public class checkJythonListener extends MyJythonListener {
     @Override
     public void exitReturnStatement(jythonParser.ReturnStatementContext ctx) {
         String returnStatement = ctx.expression().getText();
-        String methodName = (String) currentTable.table.get(new Pair<>(Kind.Method, "methodName"));
-        Method method = (Method) currentTable.parent.table.get(new Pair<>(Kind.Method, methodName));
-        if (!currentTable.expressions.containsKey(returnStatement)) {
+        String methodName = (String) currentScope.table.get(new Pair<>(Kind.Method, "methodName"));
+        Method method = (Method) currentScope.parent.table.get(new Pair<>(Kind.Method, methodName));
+        if (!currentScope.expressions.containsKey(returnStatement)) {
             System.out.println("Error 230 : in line " + ctx.start.getLine() + ", return type of this method must be "
                     + method.returnType + ".");
         } else {
-            String returnType = currentTable.expressions.get(returnStatement);
+            String returnType = currentScope.expressions.get(returnStatement);
             if (!method.returnType.equals(returnType)) {
                 System.out.println("Error 230 : in line " + ctx.start.getLine() + ", return type of this method must be "
                         + method.returnType + ".");
@@ -355,13 +357,14 @@ public class checkJythonListener extends MyJythonListener {
         boolean bool = true;
         for (int i = 0; i < ctx.expression().size(); i++) {
             String exp = ctx.expression(i).getText();
-            if (!currentTable.expressions.containsKey(exp))
-                bool = false;
-            else if (!currentTable.expressions.get(exp).equals("boolean"))
-                bool = false;
+            if (!exp.equals("true") && !exp.equals("false"))
+                if (!currentScope.expressions.containsKey(exp))
+                    bool = false;
+                else if (!currentScope.expressions.get(exp).equals("boolean"))
+                    bool = false;
         }
         if (!bool) {
-            System.out.println("Error 220 : in line " + ctx.start.getLine() + ",Condition type must be Boolean.");
+            System.out.println("Error 220 : in line " + ctx.start.getLine() + ", Condition type must be Boolean.");
         }
     }
 
@@ -372,6 +375,10 @@ public class checkJythonListener extends MyJythonListener {
      */
     @Override
     public void enterWhileStatement(jythonParser.WhileStatementContext ctx) {
+        SymbolTable whileTable;
+        String whileName = "while" + ctx.start.getLine() + ctx.start.getCharPositionInLine();
+        whileTable = (SymbolTable) currentScope.table.get(new Pair<>(Kind.Scope, whileName));
+        currentScope = whileTable;
     }
 
     /**
@@ -381,6 +388,7 @@ public class checkJythonListener extends MyJythonListener {
      */
     @Override
     public void exitWhileStatement(jythonParser.WhileStatementContext ctx) {
+        currentScope = currentScope.parent;
     }
 
     /**
@@ -418,11 +426,11 @@ public class checkJythonListener extends MyJythonListener {
     @Override
     public void exitPrintStatement(jythonParser.PrintStatementContext ctx) {
         String printStatement = ctx.expression().getText();
-        if (!currentTable.expressions.containsKey(printStatement)) {
+        if (!currentScope.expressions.containsKey(printStatement)) {
             System.out.println("Error 270 : in line " + ctx.start.getLine() +
                     ", Type of parameter of print built-in function must be integer, string ,float or boolean.");
         } else {
-            String statementType = currentTable.expressions.get(printStatement);
+            String statementType = currentScope.expressions.get(printStatement);
             if (!statementType.equals("float") && !statementType.equals("int") && !statementType.equals("string") && !statementType.equals("boolean")) {
                 System.out.println("Error 270 : in line " + ctx.start.getLine() +
                         ", Type of parameter of print built-in function must be integer, string ,float or boolean.");
@@ -501,8 +509,16 @@ public class checkJythonListener extends MyJythonListener {
     public void exitAssignment(jythonParser.AssignmentContext ctx) {
         if (ctx.arrayDec() != null) { // array assignment
             String parameter = ctx.expression().getText();
-            if (!currentTable.expressions.get(parameter).equals("int")) {
-                System.out.println("Error 210 : in line " + ctx.start.getLine() + ", size of an array must be of type integer");
+            SymbolTable currentTable = currentScope;
+            while (currentTable.parent != null) {
+                if (currentTable.expressions.containsKey(parameter)) {
+                    if (!currentTable.expressions.get(parameter).equals("int")) {
+                        System.out.println("Error 210 : in line " + ctx.start.getLine() + ", size of an array must be of type integer");
+                    }
+                    break;
+                } else {
+                    currentTable = currentTable.parent;
+                }
             }
             String arrayType = ctx.arrayDec().type().getText();
             String type = ctx.type().getText();
@@ -510,7 +526,7 @@ public class checkJythonListener extends MyJythonListener {
         } else if (ctx.varDec() != null) { // var assignment
             String vatType = ctx.varDec().type().getText();
             String parameter = ctx.expression().getText();
-            String parameterType = currentTable.expressions.get(parameter);
+            String parameterType = currentScope.expressions.get(parameter);
             checkAssignmentType(ctx, vatType, parameterType);
         }
     }
@@ -580,9 +596,9 @@ public class checkJythonListener extends MyJythonListener {
     @SuppressWarnings("Duplicates")
     @Override
     public void enterLeftExp(jythonParser.LeftExpContext ctx) {
+        SymbolTable currentTable;
         if (ctx.getText().startsWith("self.")) {
-            currentTable = new SymbolTable(currentTable);
-            currentTable.table = thisClass.symbolTable.table;
+            currentTable = thisClass.symbolTable;
         } else {
             currentTable = currentScope;
         }
@@ -603,7 +619,7 @@ public class checkJythonListener extends MyJythonListener {
             System.out.println("Error108 : in line " + ctx.start.getLine() + " , cannot find variable " + varName);
             lastVariable.type = "undefined";
         } else {
-            currentTable.expressions.put(variable.name, variable.type);
+            currentScope.expressions.put(variable.name, variable.type);
             lastVariable.type = variable.type;
             lastVariable.name = variable.name;
         }
@@ -622,143 +638,7 @@ public class checkJythonListener extends MyJythonListener {
     @SuppressWarnings("Duplicates")
     @Override
     public void exitLeftExp(jythonParser.LeftExpContext ctx) {
-        /* *********************************************************
-        System.out.println(ctx.getText());
-        if (ctx.ID() != null)
-            System.out.println(ctx.ID().getText());
-        System.out.println("-------------------------------");
 
-        String exp = ctx.getText();
-        if (ctx.ID() == null) {
-            if (exp.startsWith("self.")) {
-                String exp2 = exp.substring(5);
-                if (!currentTable.expressions.containsKey(exp2)) {
-                    //TODO: Error
-                } else {
-                    // to table parent bayad exp ro add konim
-                }
-            }
-        } else {
-            if (exp.length() > ctx.ID().getText().length()) {
-                String exp2 = exp.substring(0, exp.lastIndexOf(ctx.ID().getText()));
-                if (!currentTable.expressions.containsKey(exp2)) {
-                    //TODO: Error
-                }
-                else if (Arrays.asList(primitiveTypes).contains(exp2)) {
-                    //TODO: no such function
-                } else {
-                    currentTable = (SymbolTable) root.table.get(new Pair<>(Kind.Class, exp2));
-                }
-            }
-
-            if (exp.contains("(") && ctx.expression() == null) { // method
-                String methodName = ctx.ID().getText();
-                Variable[] variables = null;
-                boolean error = false;
-                if (ctx.args().expList() != null) {
-                    int size = ctx.args().expList().expression().size();
-                    variables = new Variable[size];
-                    String[] parameters = new String[size];
-                    for (int i = 0; i < size; i++) {
-                        parameters[i] = ctx.args().expList().expression(i).getText();
-                        if (currentTable.expressions.containsKey(parameters[i])) {
-                            variables[i] = new Variable(currentTable.expressions.get(parameters[i]), parameters[i]);
-                        } else {
-                            System.out.println("Error 240 : in line " + ctx.start.getLine() + ", Mismatch arguments.");
-                            error = true;
-                            break;
-                        }
-                    }
-                }
-                Method method = new Method(methodName);
-                if (variables != null) {
-                    method.variables = variables;
-                }
-                if (!error) {
-                    Method aMethod = null;
-                    boolean find = false, almostFind = false;
-                    while (currentTable.parent != null && !find) {
-                        if (currentTable.table.containsKey(new Pair<>(Kind.Method, methodName))) {
-                            almostFind = true;
-                            aMethod = (Method) currentTable.table.get(new Pair<>(Kind.Method, methodName));
-                            if (method.getMethodName().equals(aMethod.getMethodName())) {
-                                find = true;
-                            } else if (method.sameNames != null) {
-                                for (Method methodi : method.sameNames) {
-                                    if (method.getMethodName().equals(methodi.getMethodName())) {
-                                        aMethod = methodi;
-                                        find = true;
-                                        break;
-                                    }
-                                }
-                            } else {
-                                currentTable = currentTable.parent;
-                            }
-                        } else
-                            currentTable = currentTable.parent;
-                    }
-                    if (!find) {
-                        if (almostFind)
-                            System.out.println("Error 240 : in line " + ctx.start.getLine() + ", Mismatch arguments.");
-                        else
-                            System.out.println("Error108 : in line " + ctx.start.getLine() + " , cannot find method " + methodName);
-                    } else {
-                        method = aMethod;
-                        currentTable.expressions.put(ctx.getText(), method.returnType);
-                    }
-                }
-            } else if (exp.contains("[")) { // array
-                String arrayName = exp.substring(0, exp.indexOf('['));
-                String expressions = ctx.expression().getText();
-
-                Variable variable = null;
-                boolean find = false, varMisty = false;
-                while (currentTable.parent != null && !find) {
-                    if (currentTable.table.containsKey(new Pair<>(Kind.Variable, arrayName))) {
-                        variable = (Variable) currentTable.table.get(new Pair<>(Kind.Variable, arrayName));
-                        if (variable.type.contains("[")) {
-                            find = true;
-                            varMisty = variable.misty;
-                        } else {
-                            currentTable = currentTable.parent;
-                        }
-                    } else
-                        currentTable = currentTable.parent;
-                }
-                if (!find || varMisty) {
-                    System.out.println("Error108 : in line " + ctx.start.getLine() + " , cannot find variable " + arrayName);
-                } else {
-                    currentTable.expressions.put(variable.name, variable.type);
-                }
-
-                if (currentTable.expressions.containsKey(expressions)) { //TODO: type checking
-                    String type = currentTable.expressions.get(expressions);
-//                    if (!type.equals("int"))
-//                        System.out.println("Error 210 : in line " + ctx.start.getLine() + ", size or index of an array must be of type integer");
-                } else {
-
-                }
-            } else { // variable
-                String varName = ctx.ID().getText();
-
-                Variable variable = null;
-                boolean find = false, varMisty = false;
-                while (currentTable.parent != null && !find) {
-                    if (currentTable.table.containsKey(new Pair<>(Kind.Variable, varName))) {
-                        find = true;
-                        variable = (Variable) currentTable.table.get(new Pair<>(Kind.Variable, varName));
-                        varMisty = variable.misty;
-                    } else
-                        currentTable = currentTable.parent;
-                }
-                if (!find || varMisty) {
-                    System.out.println("Error108 : in line " + ctx.start.getLine() + " , cannot find variable " + varName);
-                } else {
-                    currentTable.expressions.put(variable.name, variable.type);
-                }
-            }
-        }
-        *******************************************************/
     }
 
     /**
@@ -772,84 +652,80 @@ public class checkJythonListener extends MyJythonListener {
             if (ctx.getText().startsWith("."))
                 if (ctx.leftExpEnd() != null) {
                     System.out.println(ctx.ID().getText());
-
+                    SymbolTable currentTable;
                     String className = lastVariable.type;
-                    Class typeClass = null;
+                    Class typeClass;
                     if (root.table.containsKey(new Pair<>(Kind.Class, className))) {
                         typeClass = (Class) root.table.get(new Pair<>(Kind.Class, className));
                         currentTable = typeClass.symbolTable;
-                    }
 
-                    if (ctx.args() != null) { // Method ---------------------------------------------------------
-                        String methodName = ctx.ID().getText();
-                        Method method = null;
-                        boolean find = false, methodMisty = false;
-                        while (currentTable.parent != null && !find) {
-                            if (currentTable.table.containsKey(new Pair<>(Kind.Method, methodName))) {
-                                find = true;
-                                method = (Method) currentTable.table.get(new Pair<>(Kind.Method, methodName));
-                                if (typeClass != null)
+                        if (ctx.args() != null) { // Method ---------------------------------------------------------
+                            String methodName = ctx.ID().getText();
+                            Method method = null;
+                            boolean find = false, methodMisty = false;
+                            while (currentTable.parent != null && !find) {
+                                if (currentTable.table.containsKey(new Pair<>(Kind.Method, methodName))) {
+                                    find = true;
+                                    method = (Method) currentTable.table.get(new Pair<>(Kind.Method, methodName));
                                     method.misty = typeClass.misty;
-                                methodMisty = method.misty;
-                            } else
-                                currentTable = currentTable.parent;
-                        }
-                        if (!find || methodMisty) {
-                            System.out.println("Error105 : in line " + ctx.start.getLine() + " , cannot find method " + methodName);
-                            lastVariable.type = "undefined";
-                        } else {
-                            if (lastVariable.type.equals("void")) {
-                                System.out.println("Error : return type of method is void");
+                                    methodMisty = method.misty;
+                                } else
+                                    currentTable = currentTable.parent;
+                            }
+                            if (!find || methodMisty) {
+                                System.out.println("Error105 : in line " + ctx.start.getLine() + " , cannot find method " + methodName);
                                 lastVariable.type = "undefined";
+                            } else {
+                                if (lastVariable.type.equals("void")) {
+                                    System.out.println("Error : return type of method is void");
+                                    lastVariable.type = "undefined";
+                                } else if (!lastVariable.type.equals("undefined")) {
+                                    String expressionName = lastVariable.name + "." + ctx.getText().substring(1, ctx.getText().indexOf(ctx.args().getText()) + ctx.args().getText().length());
+                                    currentScope.expressions.put(expressionName, method.returnType);
+                                    lastVariable.type = method.returnType;
+                                    lastVariable.name = expressionName;
+                                }
                             }
-                            else if (!lastVariable.type.equals("undefined")) {
-                                String s = ctx.getText();
-                                String expressionName = lastVariable.name + "." + ctx.getText().substring(1, ctx.getText().indexOf(ctx.args().getText()) + ctx.args().getText().length());
-                                currentTable.expressions.put(expressionName, method.returnType);
-                                lastVariable.type = method.returnType;
-                                lastVariable.name = expressionName;
-                            }
-                        }
-                    } else { // Variable -------------------------------------------------------------------------------
-                        String varName = ctx.ID().getText();
-                        Variable variable = null;
-                        boolean find = false, varMisty = false;
-                        while (currentTable.parent != null && !find) {
-                            if (currentTable.table.containsKey(new Pair<>(Kind.Variable, varName))) {
-                                find = true;
-                                variable = (Variable) currentTable.table.get(new Pair<>(Kind.Variable, varName));
-                                if (typeClass != null)
+                        } else { // Variable -------------------------------------------------------------------------------
+                            String varName = ctx.ID().getText();
+                            Variable variable = null;
+                            boolean find = false, varMisty = false;
+                            while (currentTable.parent != null && !find) {
+                                if (currentTable.table.containsKey(new Pair<>(Kind.Variable, varName))) {
+                                    find = true;
+                                    variable = (Variable) currentTable.table.get(new Pair<>(Kind.Variable, varName));
                                     variable.misty = typeClass.misty;
-                                varMisty = variable.misty;
-                            } else
-                                currentTable = currentTable.parent;
-                        }
-                        if (!find || varMisty) {
-                            System.out.println("Error108 : in line " + ctx.start.getLine() + " , cannot find variable " + varName);
-                            lastVariable.type = "undefined";
-                        } else {
-                            if (lastVariable.type.equals("void")) {
-                                System.out.println("Error : return type of method is void");
+                                    varMisty = variable.misty;
+                                } else
+                                    currentTable = currentTable.parent;
+                            }
+                            if (!find || varMisty) {
+                                System.out.println("Error108 : in line " + ctx.start.getLine() + " , cannot find variable " + varName);
                                 lastVariable.type = "undefined";
+                            } else {
+                                if (lastVariable.type.equals("void")) {
+                                    System.out.println("Error : return type of method is void");
+                                    lastVariable.type = "undefined";
+                                } else if (!lastVariable.type.equals("undefined")) {
+                                    String expressionName = lastVariable.name + "." + variable.name;
+                                    currentScope.expressions.put(expressionName, variable.type);
+                                    lastVariable.type = variable.type;
+                                    lastVariable.name = expressionName;
+                                }
                             }
-                            else if (!lastVariable.type.equals("undefined")) {
-                                String expressionName = lastVariable.name + "." + variable.name;
-                                currentTable.expressions.put(expressionName, variable.type);
-                                lastVariable.type = variable.type;
-                                lastVariable.name = expressionName;
-                            }
-                        }
-                    } // Variable --------------------------------------------------------------------------------------
-
+                        } // Variable --------------------------------------------------------------------------------------
+                    } else {
+                        System.out.println("Error108 : in line " + ctx.start.getLine() + ", Can not find Variable " + ctx.ID().getText());
+                    }
                 } else
                     System.out.println(ctx.getText().substring(1));
             else { // Array --------------------------------------------------------------------------------------------
                 if (lastVariable.type.contains("[")) {
-                    String expression = lastVariable.name + ctx.getText().substring(0, ctx.getText().indexOf(ctx.expression().getText()) + ctx.expression().getText().length() + 1);
-                    System.out.println(expression);
-                    lastVariable.name = expression;
-                    lastVariable.name = lastVariable.type.substring(0, lastVariable.type.indexOf("["));
+                    lastVariable.name = lastVariable.name + ctx.getText().substring(0, ctx.getText().indexOf(ctx.expression().getText()) + ctx.expression().getText().length() + 1);
+                    lastVariable.type = lastVariable.type.substring(0, lastVariable.type.indexOf("["));
+                    currentScope.expressions.put(lastVariable.name, lastVariable.type);
                 } else {
+                    System.out.println("Error108 : in line " + ctx.start.getLine() + " , Can not find Variable " + lastVariable.name.substring(lastVariable.name.lastIndexOf(".") + 1));
                     System.out.println("Error108 : in line " + ctx.start.getLine() + " , Can not find Variable " + lastVariable.name.substring(lastVariable.name.lastIndexOf(".") + 1));
                 }
             }
@@ -1070,5 +946,23 @@ public class checkJythonListener extends MyJythonListener {
      */
     @Override
     public void visitErrorNode(ErrorNode node) {
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void enterBool(jythonParser.BoolContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void exitBool(jythonParser.BoolContext ctx) {
     }
 }

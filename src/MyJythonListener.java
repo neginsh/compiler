@@ -218,9 +218,14 @@ public class MyJythonListener implements jythonListener {
             arrayName += "(duplicate " + ctx.start.getLine() + ")";
         }
 
-        String arrayType = ctx.type().getText() + "[]";
-        String size = ctx.expression().getText();
-        Array array = new Array(arrayType, arrayName, size);
+        String arrayType = ctx.type().getText();
+        Array array;
+        if (ctx.expression() != null) {
+            String size = ctx.expression().getText();
+            array = new Array(arrayType, arrayName, size);
+        } else {
+            array = new Array(arrayType, arrayName);
+        }
         if (!Arrays.asList(primitiveTypes).contains(arrayType)) {
             if (!root.table.containsKey(new Pair<>(Kind.Class, arrayType)))
                 array.misty = true;
@@ -230,6 +235,7 @@ public class MyJythonListener implements jythonListener {
                     array.misty = true;
             }
         }
+        array.type += "[]";
         currentScope.table.put(new Pair<>(Kind.Variable, arrayName), array);
     }
 
@@ -300,6 +306,7 @@ public class MyJythonListener implements jythonListener {
         currentScope = new SymbolTable(currentScope);
         method.symbolTable = currentScope;
         currentScope.table.put(new Pair<>(Kind.Method, "methodName"), methodName);
+
     }
 
     /**
@@ -445,7 +452,9 @@ public class MyJythonListener implements jythonListener {
      */
     @Override
     public void enterWhileStatement(jythonParser.WhileStatementContext ctx) {
+        String whileName = "while" + ctx.start.getLine() + ctx.start.getCharPositionInLine();
         currentScope = new SymbolTable(currentScope);
+        currentScope.parent.table.put(new Pair<>(Kind.Scope, whileName), currentScope);
     }
 
     /**
@@ -813,6 +822,24 @@ public class MyJythonListener implements jythonListener {
      */
     @Override
     public void exitJythonType(jythonParser.JythonTypeContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void enterBool(jythonParser.BoolContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void exitBool(jythonParser.BoolContext ctx) {
     }
 
     /**

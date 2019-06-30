@@ -72,7 +72,7 @@ expression  : expression multModDiv expression
             ;
 
 rightExp : 'none'
-         | BOOL
+         | bool
          | INTEGER
          | STRING
          | FLOAT
@@ -107,7 +107,7 @@ jythonType           : 'float'|'int'|'bool'|'string';
 ID                   : (LowerCaseChar)(LowerCaseChar|UpperCaseChar|DIGIT|'_' )*;
 INTEGER              : CDIGIT(DIGIT)* | [0] ;
 STRING               : '"' ~('\r' | '\n' | '"')* '"';
-BOOL                 : 'false' |'true';
+bool                 : 'false' | 'true' ;
 FLOAT                : DIGIT*'.'(DIGIT)+;
 LowerCaseChar        : [a-z];
 UpperCaseChar        : [A-Z];
