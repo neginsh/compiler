@@ -1,5 +1,6 @@
 class B(C) {
-    int a
+    int[2] a
+    C b
 
     def int met(int s, float[4] b) {
         hi()
@@ -9,7 +10,7 @@ class B(C) {
 
     }
 
-    def void hi() {
+    def int hi() {
 
     }
 }

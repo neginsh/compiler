@@ -15,6 +15,7 @@ public class SymbolTable {
     public SymbolTable(SymbolTable parent) {
         this.parent = parent;
         this.table = new Hashtable<>();
+        this.expressions = new Hashtable<>();
     }
 
 }

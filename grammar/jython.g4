@@ -71,23 +71,24 @@ expression  : expression multModDiv expression
             | rightExp
             ;
 
-rightExp :
-              'none'
-            | BOOL
-            | INTEGER
-            | STRING
-            | FLOAT
-            | USER_TYPE args
-            | leftExp
-            ;
+rightExp : 'none'
+         | BOOL
+         | INTEGER
+         | STRING
+         | FLOAT
+         | USER_TYPE args
+         | leftExp
+         ;
 
-leftExp :  '(' expression')'
-        |  ID
-        |  ID args
-        |  leftExp '[' expression ']'
-        |  leftExp '.' ID
-        |  leftExp '.' ID args
-        |  'self' '.' leftExp  ;
+leftExp :  '(' expression')' leftExpEnd
+        |  ID leftExpEnd
+        |  ID args leftExpEnd
+        |  'self' leftExpEnd  ;
+
+leftExpEnd : '[' expression ']' leftExpEnd
+           | '.' ID leftExpEnd
+           | '.' ID args leftExpEnd
+           | ;
 
 //leftExp :  ( ('self' '.')? (ID | ID args | ID '[' expression ']' | ('(' expression ')')) ('.' (ID | ID args | ID '[' expression ']'))* ) ;
 

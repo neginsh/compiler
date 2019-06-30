@@ -188,8 +188,7 @@ public class MyJythonListener implements jythonListener {
                 variable.misty = true;
             else {
                 Class varClass = (Class) root.table.get(new Pair<>(Kind.Class, varType));
-                if (varClass.misty)
-                    variable.misty = true;
+                variable.misty = varClass.misty;
             }
         }
         currentScope.table.put(new Pair<>(Kind.Variable, varName), variable);
@@ -666,6 +665,20 @@ public class MyJythonListener implements jythonListener {
     @Override
     public void exitExpList(jythonParser.ExpListContext ctx) {
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void enterLeftExpEnd(jythonParser.LeftExpEndContext ctx) { }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void exitLeftExpEnd(jythonParser.LeftExpEndContext ctx) { }
 
     /**
      * {@inheritDoc}

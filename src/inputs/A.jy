@@ -1,7 +1,9 @@
 class A(B) {
     C cc
+    B a
 
     def void main () {
-        self.cc.some(a.b - t() + d[self.f.a/2].hi(c[a.z * q] - c + 0)).bb[6] = 4
+        ##self.cc.some(a.b - t() + d[self.f.a/2].hi(c[a.z * q] - c + 0)).bb[6] = 4
+        a.b.some(a.c + 5).a[a.d] = 4
     }
 }
