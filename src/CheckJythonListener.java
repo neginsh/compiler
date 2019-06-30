@@ -540,6 +540,8 @@ public class CheckJythonListener extends MyJythonListener {
                 if (parentClass.name.equals(varType)) {
                     isChild = true;
                     break;
+                } else {
+                    parentClass = parentClass.parent;
                 }
             }
             if (!isChild && !parameterType.equals(varType)) {
@@ -568,6 +570,43 @@ public class CheckJythonListener extends MyJythonListener {
     @Override
     public void exitExpression(jythonParser.ExpressionContext ctx) {
         lastVariable = lastVariable.parent;
+
+        if (ctx.rightExp() == null) {
+            String exp1 = ctx.expression(0).getText();
+            String exp2 = ctx.expression(1).getText();
+            exp1 = currentScope.expressions.get(exp1);
+            exp2 = currentScope.expressions.get(exp2);
+            if (exp1.equals("undefined") || exp2.equals("undefined")) {
+                if (exp1.equals("undefined"))
+                    System.out.println("Error : " + exp1 + " is undefined");
+                if (exp2.equals("undefined"))
+                    System.out.println("Error : " + exp2 + " is undefined");
+                currentScope.expressions.put(ctx.getText(), "undefined");
+            } else if (ctx.eqNeq() == null) {
+                if (!(exp1.equals("int") || exp1.equals("float")) || !(exp2.equals("int") || exp2.equals("float"))) {
+                    System.out.println("Error 280 : in line " + ctx.start.getLine() + ", operation not defined on this types.");
+                    currentScope.expressions.put(ctx.getText(), "undefined");
+                } else if (exp1.equals("float") || exp2.equals("float")) {
+                    currentScope.expressions.put(ctx.getText(), "float");
+                } else {
+                    currentScope.expressions.put(ctx.getText(), "int");
+                }
+            } else {
+                if (root.table.containsKey(new Pair<>(Kind.Class, exp2))) {
+                    Class leftClass = (Class) root.table.get(new Pair<>(Kind.Class, exp2));
+                    boolean match = false;
+                    while (!match && leftClass.parent != null) {
+                        if (leftClass.name.equals(exp1))
+                            match = true;
+                        else
+                            leftClass = leftClass.parent;
+                    }
+                    if (!match) {
+                        System.out.println("Error 250 : in line " + ctx.start.getLine() + ", Incompatible types: " + exp2 + " can not be converted to [RightType].");
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -586,6 +625,17 @@ public class CheckJythonListener extends MyJythonListener {
      */
     @Override
     public void exitRightExp(jythonParser.RightExpContext ctx) {
+        if (ctx.INTEGER() != null) {
+            currentScope.expressions.put(ctx.INTEGER().getText(), "int");
+        } else if (ctx.FLOAT() != null) {
+            currentScope.expressions.put(ctx.FLOAT().getText(), "float");
+        } else if (ctx.STRING() != null) {
+            currentScope.expressions.put(ctx.STRING().getText(), "string");
+        } else if (ctx.USER_TYPE() != null) {
+            currentScope.expressions.put(ctx.getText(), ctx.USER_TYPE().getText());
+        } else if (ctx.bool() != null) {
+            currentScope.expressions.put(ctx.bool().getText(), "boolean");
+        }
     }
 
     /**
@@ -597,7 +647,14 @@ public class CheckJythonListener extends MyJythonListener {
     @Override
     public void enterLeftExp(jythonParser.LeftExpContext ctx) {
         SymbolTable currentTable;
+
         if (ctx.getText().startsWith("self.")) {
+            lastVariable.name = "self";
+            lastVariable.type = thisClass.name;
+            return;
+        }
+
+        if (lastVariable.name.equals("self")) {
             currentTable = thisClass.symbolTable;
         } else {
             currentTable = currentScope;

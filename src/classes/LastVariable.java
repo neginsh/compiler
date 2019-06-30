@@ -2,7 +2,7 @@ package classes;
 
 public class LastVariable {
     public LastVariable parent;
-    public String name, type;
+    public String name = "", type;
 
     public LastVariable() { }
 
