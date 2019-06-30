@@ -18,8 +18,7 @@ import java.util.Arrays;
 public class CheckJythonListener extends MyJythonListener {
     private LastVariable lastVariable;
 
-    public CheckJythonListener(SymbolTable currentScope)
-    {
+    public CheckJythonListener(SymbolTable currentScope) {
         super(currentScope);
         lastVariable = new LastVariable();
     }
@@ -214,7 +213,9 @@ public class CheckJythonListener extends MyJythonListener {
      */
     @Override
     public void exitMethodDec(jythonParser.MethodDecContext ctx) {
+
         currentScope = currentScope.parent;
+
     }
 
     /**
@@ -322,20 +323,47 @@ public class CheckJythonListener extends MyJythonListener {
      * <p>The default implementation does nothing.</p>
      */
     @Override
+
+    //editedddddddddddddddddddddddddddd
     public void exitReturnStatement(jythonParser.ReturnStatementContext ctx) {
         String returnStatement = ctx.expression().getText();
         String methodName = (String) currentScope.table.get(new Pair<>(Kind.Method, "methodName"));
         Method method = (Method) currentScope.parent.table.get(new Pair<>(Kind.Method, methodName));
-        if (!currentScope.expressions.containsKey(returnStatement)) {
-            System.out.println("Error 230 : in line " + ctx.start.getLine() + ", return type of this method must be "
-                    + method.returnType + ".");
+
+        if (returnStatement.contains("(")) {
+
+            SymbolTable currentTable = currentScope;
+            returnStatement = returnStatement.substring(0, returnStatement.indexOf("("));
+            while (currentTable.parent != null) {
+
+                if (currentTable.table.containsKey(new Pair<>(Kind.Method, returnStatement))) {
+                    Method method2 = (Method) currentTable.table.get(new Pair<>(Kind.Method, returnStatement));
+                    if (!method.returnType.equals(method2.returnType)) {
+                        System.out.println("Error 230 : in line " + ctx.start.getLine() + ", return type of this method must be "
+                                + method.returnType + ".");
+                    }
+                    break;
+                } else {
+                    currentTable = currentTable.parent;
+                }
+
+            }
+
+
         } else {
-            String returnType = currentScope.expressions.get(returnStatement);
-            if (!method.returnType.equals(returnType)) {
+
+            if (!currentScope.expressions.containsKey(returnStatement)) {
                 System.out.println("Error 230 : in line " + ctx.start.getLine() + ", return type of this method must be "
                         + method.returnType + ".");
+            } else {
+                String returnType = currentScope.expressions.get(returnStatement);
+                if (!method.returnType.equals(returnType)) {
+                    System.out.println("Error 230 : in line " + ctx.start.getLine() + ", return type of this method must be "
+                            + method.returnType + ".");
+                }
             }
         }
+
     }
 
     /**
@@ -353,14 +381,34 @@ public class CheckJythonListener extends MyJythonListener {
      * <p>The default implementation does nothing.</p>
      */
     @Override
+
+    //editedddddddddddddddddddddddddddd
     public void exitConditionList(jythonParser.ConditionListContext ctx) {
         boolean bool = true;
         for (int i = 0; i < ctx.expression().size(); i++) {
             String exp = ctx.expression(i).getText();
             if (!exp.equals("true") && !exp.equals("false"))
-                if (!currentScope.expressions.containsKey(exp))
+                if (exp.contains("(")) {
+
+                    SymbolTable currentTable = currentScope;
+                    exp = exp.substring(0, exp.indexOf("("));
+                    while (currentTable.parent != null) {
+
+                        if (currentTable.table.containsKey(new Pair<>(Kind.Method, exp))) {
+                            Method method = (Method) currentTable.table.get(new Pair<>(Kind.Method, exp));
+                            if (!method.returnType.equals("bool")) {
+                                System.out.println("Error 220 : in line " + ctx.start.getLine() + ", Condition type must be Boolean.");
+                            }
+                            break;
+                        } else {
+                            currentTable = currentTable.parent;
+                        }
+
+                    }
+
+                } else if (!currentScope.expressions.containsKey(exp))
                     bool = false;
-                else if (!currentScope.expressions.get(exp).equals("boolean"))
+                else if (!currentScope.expressions.get(exp).equals("bool"))
                     bool = false;
         }
         if (!bool) {
@@ -506,18 +554,42 @@ public class CheckJythonListener extends MyJythonListener {
      * <p>The default implementation does nothing.</p>
      */
     @Override
+
+    //editedddddddddddddddddddddddddddd
     public void exitAssignment(jythonParser.AssignmentContext ctx) {
         if (ctx.arrayDec() != null) { // array assignment
+
             String parameter = ctx.expression().getText();
             SymbolTable currentTable = currentScope;
-            while (currentTable.parent != null) {
-                if (currentTable.expressions.containsKey(parameter)) {
-                    if (!currentTable.expressions.get(parameter).equals("int")) {
-                        System.out.println("Error 210 : in line " + ctx.start.getLine() + ", size of an array must be of type integer");
+
+            if (parameter.contains("(")) {//method
+
+                parameter = parameter.substring(0, parameter.indexOf("("));
+                while (currentTable.parent != null) {
+
+                    if (currentTable.table.containsKey(new Pair<>(Kind.Method, parameter))) {
+                        Method method = (Method) currentTable.table.get(new Pair<>(Kind.Method, parameter));
+                        if (!method.returnType.equals("int")) {
+                            System.out.println("Error 210 : in line " + ctx.start.getLine() + ", size of an array must be of type integer");
+                        }
+                        break;
+                    } else {
+                        currentTable = currentTable.parent;
                     }
-                    break;
-                } else {
-                    currentTable = currentTable.parent;
+
+                }
+            } else if (parameter.contains("+")) {//math
+            } else {
+
+                while (currentTable.parent != null) {
+                    if (currentTable.expressions.containsKey(parameter)) {
+                        if (!currentTable.expressions.get(parameter).equals("int")) {
+                            System.out.println("Error 210 : in line " + ctx.start.getLine() + ", size of an array must be of type integer");
+                        }
+                        break;
+                    } else {
+                        currentTable = currentTable.parent;
+                    }
                 }
             }
             String arrayType = ctx.arrayDec().type().getText();
@@ -531,6 +603,8 @@ public class CheckJythonListener extends MyJythonListener {
         }
     }
 
+
+    //editedddddddddddddddddddddddddddd
     private void checkAssignmentType(jythonParser.AssignmentContext ctx, String varType, String parameterType) {
         Class typeClass = (Class) root.table.get(new Pair<>(Kind.Class, parameterType));
         if (typeClass != null) {
@@ -541,6 +615,7 @@ public class CheckJythonListener extends MyJythonListener {
                     isChild = true;
                     break;
                 }
+                parentClass = parentClass.parent;
             }
             if (!isChild && !parameterType.equals(varType)) {
                 System.out.println("Error 250 : in line " + ctx.start.getLine() + ", incompatible types : " +
@@ -557,7 +632,7 @@ public class CheckJythonListener extends MyJythonListener {
     @Override
     public void enterExpression(jythonParser.ExpressionContext ctx) {
         lastVariable = new LastVariable(lastVariable);
-        
+
     }
 
     /**
@@ -597,6 +672,7 @@ public class CheckJythonListener extends MyJythonListener {
     @Override
     public void enterLeftExp(jythonParser.LeftExpContext ctx) {
         SymbolTable currentTable;
+        System.out.println(ctx.getText());
         if (ctx.getText().startsWith("self.")) {
             currentTable = thisClass.symbolTable;
         } else {
@@ -604,25 +680,31 @@ public class CheckJythonListener extends MyJythonListener {
         }
 
         // Variable ----------------------------------------------------------------------------------------------------
+        //if (!ctx.getText().contains("(")) {
         String varName = ctx.ID().getText();
         Variable variable = null;
+        Method Method = null;
         boolean find = false, varMisty = false;
         while (currentTable.parent != null && !find) {
             if (currentTable.table.containsKey(new Pair<>(Kind.Variable, varName))) {
                 find = true;
                 variable = (Variable) currentTable.table.get(new Pair<>(Kind.Variable, varName));
                 varMisty = variable.misty;
+            } else if (currentTable.table.containsKey(new Pair<>(Kind.Method, varName))) {
+                find = true;
+                Method = (Method) currentTable.table.get(new Pair<>(Kind.Method, varName));
             } else
                 currentTable = currentTable.parent;
         }
         if (!find || varMisty) {
             System.out.println("Error108 : in line " + ctx.start.getLine() + " , cannot find variable " + varName);
             lastVariable.type = "undefined";
-        } else {
+        } else if (Method == null) {
             currentScope.expressions.put(variable.name, variable.type);
             lastVariable.type = variable.type;
             lastVariable.name = variable.name;
         }
+        //}
         // Variable ----------------------------------------------------------------------------------------------------
 
         String s = ctx.getText().substring(0, ctx.getText().indexOf(ctx.leftExpEnd().getText()));
@@ -647,7 +729,8 @@ public class CheckJythonListener extends MyJythonListener {
      * <p>The default implementation does nothing.</p>
      */
     @SuppressWarnings("Duplicates")
-    @Override public void enterLeftExpEnd(jythonParser.LeftExpEndContext ctx) {
+    @Override
+    public void enterLeftExpEnd(jythonParser.LeftExpEndContext ctx) {
         if (ctx.leftExpEnd() != null)
             if (ctx.getText().startsWith("."))
                 if (ctx.leftExpEnd() != null) {
@@ -740,7 +823,8 @@ public class CheckJythonListener extends MyJythonListener {
      *
      * <p>The default implementation does nothing.</p>
      */
-    @Override public void exitLeftExpEnd(jythonParser.LeftExpEndContext ctx) {
+    @Override
+    public void exitLeftExpEnd(jythonParser.LeftExpEndContext ctx) {
 
     }
 

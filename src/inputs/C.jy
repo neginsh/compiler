@@ -3,10 +3,8 @@ class C {
     B[7] bb
 
     def B some() {
-
     }
 
     def void main() {
-
     }
 }
