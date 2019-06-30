@@ -1,17 +1,21 @@
 class A(B) {
     C cc
-    int q
     B a
-
-    def void main () {
-
-        ##self.cc.some(a.b - t() + d[self.f.a/2].hi(c[a.z * q] - c + 0)).bb[6] = 4
-        self.a.b.some(a.c + 5).a[a.d] = 4
-        while(true) {
-            A[] s = A()[q]
-        }
+    int[] q
+    bool c
+    def bool add(){
+        return c
     }
     def int eat(){
-        return q
+        return add()
     }
+
+    def void main () {
+        ##self.cc.some(a.b - t() + d[self.f.a/2].hi(c[a.z * q] - c + 0)).bb[6] = 4
+        a.b.some(a.c + 5).a[a.d] = 4
+        while(c) {
+            A[] s = A()[q[2]]
+        }
+    }
+
 }

@@ -643,6 +643,57 @@ public class CheckJythonListener extends MyJythonListener {
     @Override
     public void exitExpression(jythonParser.ExpressionContext ctx) {
         lastVariable = lastVariable.parent;
+
+        if (ctx.rightExp() == null) {
+            String exp = "(" + ctx.getText() + ")";
+            String exp1 = ctx.expression(0).getText();
+            String exp2 = ctx.expression(1).getText();
+            exp1 = currentScope.expressions.get(exp1);
+            exp2 = currentScope.expressions.get(exp2);
+            if (exp1.equals("undefined") || exp2.equals("undefined")) {
+                if (exp1.equals("undefined"))
+                    System.out.println("Error : " + exp1 + " is undefined");
+                if (exp2.equals("undefined"))
+                    System.out.println("Error : " + exp2 + " is undefined");
+                currentScope.expressions.put(ctx.getText(), "undefined");
+                if (lastVariable.name.equals(exp))
+                    lastVariable.type = "undefined";
+            } else if (ctx.eqNeq() == null) {
+                if (!(exp1.equals("int") || exp1.equals("float")) || !(exp2.equals("int") || exp2.equals("float"))) {
+                    System.out.println("Error 280 : in line " + ctx.start.getLine() + ", operation not defined on this types.");
+                    currentScope.expressions.put(ctx.getText(), "undefined");
+                    if (lastVariable.name.equals(exp))
+                        lastVariable.type = "undefined";
+                } else if (exp1.equals("float") || exp2.equals("float")) {
+                    currentScope.expressions.put(ctx.getText(), "float");
+                    if (lastVariable.name.equals(exp))
+                        lastVariable.type = "float";
+                } else {
+                    currentScope.expressions.put(ctx.getText(), "int");
+                    if (lastVariable.name.equals(exp))
+                        lastVariable.type = "int";
+                }
+            } else {
+                if (root.table.containsKey(new Pair<>(Kind.Class, exp2))) {
+                    Class leftClass = (Class) root.table.get(new Pair<>(Kind.Class, exp2));
+                    boolean match = false;
+                    while (!match && leftClass.parent != null) {
+                        if (leftClass.name.equals(exp1))
+                            match = true;
+                        else
+                            leftClass = leftClass.parent;
+                    }
+                    if (!match) {
+                        System.out.println("Error 250 : in line " + ctx.start.getLine() + ", Incompatible types: " + exp2 + " can not be converted to " + exp1 + ".");
+                        if (lastVariable.name.equals(exp))
+                            lastVariable.type = "undefined";
+                    } else {
+                        if (lastVariable.name.equals(exp))
+                            lastVariable.type = leftClass.name;
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -661,6 +712,17 @@ public class CheckJythonListener extends MyJythonListener {
      */
     @Override
     public void exitRightExp(jythonParser.RightExpContext ctx) {
+        if (ctx.INTEGER() != null) {
+            currentScope.expressions.put(ctx.INTEGER().getText(), "int");
+        } else if (ctx.FLOAT() != null) {
+            currentScope.expressions.put(ctx.FLOAT().getText(), "float");
+        } else if (ctx.STRING() != null) {
+            currentScope.expressions.put(ctx.STRING().getText(), "string");
+        } else if (ctx.USER_TYPE() != null) {
+            currentScope.expressions.put(ctx.getText(), ctx.USER_TYPE().getText());
+        } else if (ctx.bool() != null) {
+            currentScope.expressions.put(ctx.bool().getText(), "boolean");
+        }
     }
 
     /**
@@ -672,40 +734,48 @@ public class CheckJythonListener extends MyJythonListener {
     @Override
     public void enterLeftExp(jythonParser.LeftExpContext ctx) {
         SymbolTable currentTable;
-        System.out.println(ctx.getText());
+
         if (ctx.getText().startsWith("self.")) {
+            lastVariable.name = "self";
+            lastVariable.type = thisClass.name;
+            return;
+        }
+
+        if (lastVariable.name != null && lastVariable.name.equals("self")) {
             currentTable = thisClass.symbolTable;
         } else {
             currentTable = currentScope;
         }
 
-        // Variable ----------------------------------------------------------------------------------------------------
-        //if (!ctx.getText().contains("(")) {
-        String varName = ctx.ID().getText();
-        Variable variable = null;
-        Method Method = null;
-        boolean find = false, varMisty = false;
-        while (currentTable.parent != null && !find) {
-            if (currentTable.table.containsKey(new Pair<>(Kind.Variable, varName))) {
-                find = true;
-                variable = (Variable) currentTable.table.get(new Pair<>(Kind.Variable, varName));
-                varMisty = variable.misty;
-            } else if (currentTable.table.containsKey(new Pair<>(Kind.Method, varName))) {
-                find = true;
-                Method = (Method) currentTable.table.get(new Pair<>(Kind.Method, varName));
-            } else
-                currentTable = currentTable.parent;
+        if (ctx.expression() == null) { // Variable --------------------------------------------------------------------
+            String varName = ctx.ID().getText();
+            Variable variable = null;
+            Method Method = null;
+            boolean find = false, varMisty = false;
+            while (currentTable.parent != null && !find) {
+                if (currentTable.table.containsKey(new Pair<>(Kind.Variable, varName))) {
+                    find = true;
+                    variable = (Variable) currentTable.table.get(new Pair<>(Kind.Variable, varName));
+                    varMisty = variable.misty;
+                }else if (currentTable.table.containsKey(new Pair<>(Kind.Method, varName))) {
+                    find = true;
+                    Method = (Method) currentTable.table.get(new Pair<>(Kind.Method, varName));
+                } else
+                    currentTable = currentTable.parent;
+            }
+
+            if (!find || varMisty) {
+                System.out.println("Error108 : in line " + ctx.start.getLine() + " , cannot find variable " + varName);
+                lastVariable.type = "undefined";
+            } else if (Method == null){
+                currentScope.expressions.put(variable.name, variable.type);
+                lastVariable.type = variable.type;
+                lastVariable.name = variable.name;
+            }
+        } else  {
+            lastVariable.name = "(" + ctx.expression().getText() + ")";
         }
-        if (!find || varMisty) {
-            System.out.println("Error108 : in line " + ctx.start.getLine() + " , cannot find variable " + varName);
-            lastVariable.type = "undefined";
-        } else if (Method == null) {
-            currentScope.expressions.put(variable.name, variable.type);
-            lastVariable.type = variable.type;
-            lastVariable.name = variable.name;
-        }
-        //}
-        // Variable ----------------------------------------------------------------------------------------------------
+
 
         String s = ctx.getText().substring(0, ctx.getText().indexOf(ctx.leftExpEnd().getText()));
         System.out.println("--- " + s);
