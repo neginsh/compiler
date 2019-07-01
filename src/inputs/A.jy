@@ -14,13 +14,15 @@ class A(B) {
     }
 
     def void main () {
-        #int w = 3 * q[3]
+        int w = 3 * q[3]
+        A objectA = D()
         a.b.some(a.c + 5).a[6] = 4
         while(c) {
             A[] s = A()[a.hi()]
         }
         a = 4
-        if(true + "str") {
+        a += q[3]
+        if(a < 3) {
             int a
         }
     }

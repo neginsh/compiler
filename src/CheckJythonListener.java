@@ -601,12 +601,16 @@ public class CheckJythonListener extends MyJythonListener {
             rightType = ctx.type().getText();
             if (ctx.arrayDec() != null) {
                 leftType = ctx.arrayDec().type().getText();
+            } else if (ctx.varDec() != null) {
+                leftType = ctx.varDec().type().getText();
             } else { // left Exp
                 String leftExp = ctx.leftExp().getText();
                 leftType = currentScope.expressions.get(leftExp);
             }
         } else {
             String rightExp = ctx.expression().getText();
+            if (rightExp.equals("none"))
+                return;
             rightType = currentScope.expressions.get(rightExp);
             if (ctx.varDec() != null) {
                 leftType = ctx.varDec().type().getText();
@@ -636,6 +640,9 @@ public class CheckJythonListener extends MyJythonListener {
                     System.out.println("Error 250 : in line " + ctx.start.getLine() + ", Incompatible types : "
                             + rightType + " can not be converted to " + leftType + ".");
                 }
+            } else {
+                System.out.println("Error 250 : in line " + ctx.start.getLine() + ", Incompatible types : "
+                        + rightType + " can not be converted to " + leftType + ".");
             }
         }
 
@@ -696,9 +703,9 @@ public class CheckJythonListener extends MyJythonListener {
                 return;
             }
 
-            boolean intFloat = !(exp1.equals("int") || exp1.equals("float")) || !(exp2.equals("int") || exp2.equals("float"));
+            boolean intFloatNot = !(exp1.equals("int") || exp1.equals("float")) || !(exp2.equals("int") || exp2.equals("float"));
             if (ctx.multModDiv() != null || ctx.addSub() != null) {
-                if (intFloat) {
+                if (intFloatNot) {
                     System.out.println("Error 280 : in line " + ctx.start.getLine() + ", operation not defined on this types.");
                     currentScope.expressions.put(ctx.getText(), "undefined");
                     if (lastVariable.name != null && lastVariable.name.equals(exp))
@@ -713,7 +720,7 @@ public class CheckJythonListener extends MyJythonListener {
                         lastVariable.type = "int";
                 }
             } else { // compare
-                if (intFloat) {
+                if (!intFloatNot) {
                     if (!exp1.equals(exp2)) {
                         System.out.println("Error 280 : in line " + ctx.start.getLine() + ", operation not defined on this types.");
                     } else {

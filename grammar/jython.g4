@@ -61,10 +61,11 @@ methodCall : 'self' '.' methodCall
             | ID args
             | leftExp '.' ID args ;
 
-assignment  : leftExp assignmentOperators  expression
-            | varDec assignmentOperators  expression
-            | arrayDec '='  type '('')' ('['expression']')?
+assignment  : varDec '=' type '(' ')'
+            | arrayDec '='  type '(' ')' ('['expression']')
             | leftExp '=' type '(' ')' ('['expression']')?
+            | leftExp assignmentOperators  expression
+            | varDec assignmentOperators  expression
             ;
 
 
