@@ -20,7 +20,7 @@ methodDec : 'def' returnType  ID  '(' parameters? ')''{' ( statement)* '}';
 
 returnType : type|'void'|type '['']' ;
 
-constructor : 'def'  USER_TYPE '(' parameters* ')''{' ( statement)* '}' ;
+constructor : 'def'  USER_TYPE '(' parameters? ')''{' ( statement)* '}' ;
 
 parameter : (varDec | arrayDec);
 
@@ -43,24 +43,28 @@ conditionList : expression (('or'|'and')  expression)* ;
 
 whileStatement : 'while' '(' conditionList ')' '{' statement* '}' ;
 
-ifElseStatement :'if' '(' conditionList ')' '{' statement* '}'
-                 ('elif' '(' conditionList ')' '{' statement* '}')*
-                 ('else' '{' statement* '}')?  ;
+ifElseStatement : ifStatement
+                  (elseIfStatement)*
+                  (elseStatement)? ;
+
+ifStatement : 'if' '(' conditionList ')' '{' statement* '}' ;
+elseIfStatement : 'elif' '(' conditionList ')' '{' statement* '}' ;
+elseStatement : 'else' '{' statement* '}' ;
 
 printStatement : 'print' '('  expression ')' ;
 
-forStatement : 'for' ID 'in' leftExp '{' statement* '}'
-             | 'for' ID 'in' 'range''('expression (',' expression)? (',' expression)? ')' '{' statement* '}'
-             ;
+forStatement : forVariable '{' statement* '}' ;
+forVariable : 'for' ID 'in' leftExp
+           | 'for' ID 'in' 'range''('expression (',' expression)? (',' expression)? ')' ;
 
 methodCall : 'self' '.' methodCall
             | ID args
-            | leftExp '.' ID args;
+            | leftExp '.' ID args ;
 
 assignment  : leftExp assignmentOperators  expression
             | varDec assignmentOperators  expression
-            | arrayDec '='  type '('')' ('['expression']')
-            | leftExp '=' type '(' ')' ('['expression']')
+            | arrayDec '='  type '('')' ('['expression']')?
+            | leftExp '=' type '(' ')' ('['expression']')?
             ;
 
 

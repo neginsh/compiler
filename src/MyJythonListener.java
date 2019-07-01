@@ -138,11 +138,13 @@ public class MyJythonListener implements jythonListener {
                 MyObject myObject = (MyObject) object;
                 if (myObject.misty) {
 
-                } else
-                    System.out.println(key + " : " + currentScope.table.get(key));
+                } else {
+                    //System.out.println(key + " : " + currentScope.table.get(key));
+                }
             }
-            else
-                System.out.println(key + " : " + currentScope.table.get(key));
+            else {
+                //System.out.println(key + " : " + currentScope.table.get(key));
+            }
         }
         currentScope = currentScope.parent;
         thisClass = null;
@@ -253,6 +255,7 @@ public class MyJythonListener implements jythonListener {
      *
      * <p>The default implementation does nothing.</p>
      */
+    @SuppressWarnings("Duplicates")
     @Override
     public void enterMethodDec(jythonParser.MethodDecContext ctx) {
         String methodName = ctx.ID().getText();
@@ -342,8 +345,36 @@ public class MyJythonListener implements jythonListener {
      *
      * <p>The default implementation does nothing.</p>
      */
+    @SuppressWarnings("Duplicates")
     @Override
     public void enterConstructor(jythonParser.ConstructorContext ctx) {
+        Variable[] variables = null;
+
+        if (ctx.parameters() != null) {
+            int parametersNumber = ctx.parameters().parameter().size();
+            variables = new Variable[parametersNumber];
+            for (int i = 0; i < parametersNumber; i++) {
+                String varType = "";
+                String varName = "";
+
+                if (ctx.parameters().parameter(i).varDec() != null) {
+                    varType = ctx.parameters().parameter(i).varDec().type().getText();
+                    varName = ctx.parameters().parameter(i).varDec().ID().getText();
+                } else if (ctx.parameters().parameter(i).arrayDec() != null) {
+                    varType = ctx.parameters().parameter(i).arrayDec().type().getText() + "[]";
+                    varName = ctx.parameters().parameter(i).arrayDec().ID().getText();
+                }
+
+                variables[i] = new Variable(varType, varName);
+            }
+        }
+
+        Method method = new Method("constructor");
+        method.variables = variables;
+        currentScope.table.put(new Pair<>(Kind.Method, "constructor"), method);
+
+        currentScope = new SymbolTable(currentScope);
+        method.symbolTable = currentScope;
     }
 
     /**
@@ -353,6 +384,7 @@ public class MyJythonListener implements jythonListener {
      */
     @Override
     public void exitConstructor(jythonParser.ConstructorContext ctx) {
+        currentScope = currentScope.parent;
     }
 
     /**
@@ -474,7 +506,7 @@ public class MyJythonListener implements jythonListener {
      */
     @Override
     public void enterIfElseStatement(jythonParser.IfElseStatementContext ctx) {
-        currentScope = new SymbolTable(currentScope);
+
     }
 
     /**
@@ -484,7 +516,7 @@ public class MyJythonListener implements jythonListener {
      */
     @Override
     public void exitIfElseStatement(jythonParser.IfElseStatementContext ctx) {
-        currentScope = currentScope.parent;
+
     }
 
     /**
@@ -512,13 +544,9 @@ public class MyJythonListener implements jythonListener {
      */
     @Override
     public void enterForStatement(jythonParser.ForStatementContext ctx) {
+        String forName = "for" + ctx.start.getLine() + ctx.start.getCharPositionInLine();
         currentScope = new SymbolTable(currentScope);
-        String counterName = ctx.ID().getText();
-        Variable counter = new Variable(counterName, "int");
-        if (ctx.leftExp() != null) {
-            //TODO: must now type of variable
-        }
-        currentScope.table.put(new Pair<>(Kind.Variable, counterName), counter);
+        currentScope.parent.table.put(new Pair<>(Kind.Scope, forName), currentScope);
     }
 
     /**
@@ -528,6 +556,7 @@ public class MyJythonListener implements jythonListener {
      */
     @Override
     public void exitForStatement(jythonParser.ForStatementContext ctx) {
+        currentScope = currentScope.parent;
     }
 
     /**
@@ -877,4 +906,78 @@ public class MyJythonListener implements jythonListener {
     @Override
     public void visitErrorNode(ErrorNode node) {
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void enterIfStatement(jythonParser.IfStatementContext ctx) {
+        String ifName = "if" + ctx.start.getLine() + ctx.start.getCharPositionInLine();
+        currentScope = new SymbolTable(currentScope);
+        currentScope.parent.table.put(new Pair<>(Kind.Scope, ifName), currentScope);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void exitIfStatement(jythonParser.IfStatementContext ctx) {
+        currentScope = currentScope.parent;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void enterElseIfStatement(jythonParser.ElseIfStatementContext ctx) {
+        String elseIfName = "elseIf" + ctx.start.getLine() + ctx.start.getCharPositionInLine();
+        currentScope = new SymbolTable(currentScope);
+        currentScope.parent.table.put(new Pair<>(Kind.Scope, elseIfName), currentScope);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void exitElseIfStatement(jythonParser.ElseIfStatementContext ctx) {
+        currentScope = currentScope.parent;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void enterElseStatement(jythonParser.ElseStatementContext ctx) {
+        String elseName = "else" + ctx.start.getLine() + ctx.start.getCharPositionInLine();
+        currentScope = new SymbolTable(currentScope);
+        currentScope.parent.table.put(new Pair<>(Kind.Scope, elseName), currentScope);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void exitElseStatement(jythonParser.ElseStatementContext ctx) {
+        currentScope = currentScope.parent;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void enterForVariable(jythonParser.ForVariableContext ctx) { }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void exitForVariable(jythonParser.ForVariableContext ctx) { }
 }

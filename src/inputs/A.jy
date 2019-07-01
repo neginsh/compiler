@@ -3,18 +3,25 @@ class A(B) {
     B a
     int[] q
     bool c
+
     def bool add(){
-        return c
+        float w
+        return w
     }
+
     def int eat(){
-        return add()
+        return 6 % 5.8
     }
 
     def void main () {
-        ##self.cc.some(a.b - t() + d[self.f.a/2].hi(c[a.z * q] - c + 0)).bb[6] = 4
-        a.b.some(a.c + 5).a[a.d] = 4
+        #int w = 3 * q[3]
+        a.b.some(a.c + 5).a[6] = 4
         while(c) {
-            A[] s = A()[q[2]]
+            A[] s = A()[eat()]
+        }
+        a = 4
+        if(true + "str") {
+            int a
         }
     }
 
