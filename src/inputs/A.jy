@@ -17,7 +17,7 @@ class A(B) {
         #int w = 3 * q[3]
         a.b.some(a.c + 5).a[6] = 4
         while(c) {
-            A[] s = A()[eat()]
+            A[] s = A()[a.hi()]
         }
         a = 4
         if(true + "str") {

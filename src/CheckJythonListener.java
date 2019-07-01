@@ -570,11 +570,31 @@ public class CheckJythonListener extends MyJythonListener {
         if (ctx.type() != null) { // array assignment
             if (ctx.expression() != null) { //check array size type
                 String arraySize = ctx.expression().getText();
-                String sizeType = currentScope.expressions.get(arraySize);
-                if (sizeType == null) {
-                    System.out.println("Error 210 : in line " + ctx.start.getLine() + ", size of an array must be of type integer");
-                } else if (!sizeType.equals("int")) {
-                    System.out.println("Error 210 : in line " + ctx.start.getLine() + ", size of an array must be of type integer");
+                if (arraySize.contains("(")){
+                    String parameter = arraySize;
+                    SymbolTable currentTable = currentScope;
+                    parameter = parameter.substring(0, parameter.indexOf("("));
+                    while (currentTable.parent != null) {
+
+                        if (currentTable.table.containsKey(new Pair<>(Kind.Method, parameter))) {
+                            Method method = (Method) currentTable.table.get(new Pair<>(Kind.Method, parameter));
+                            if (!method.returnType.equals("int")) {
+                                System.out.println("Error 210 : in line " + ctx.start.getLine() + ", size of an array must be of type integer");
+                            }
+                            break;
+                        } else {
+                            currentTable = currentTable.parent;
+                        }
+
+                    }
+
+                }else {
+                    String sizeType = currentScope.expressions.get(arraySize);
+                    if (sizeType == null) {
+                        System.out.println("Error 210 : in line " + ctx.start.getLine() + ", size of an array must be of type integer");
+                    } else if (!sizeType.equals("int")) {
+                        System.out.println("Error 210 : in line " + ctx.start.getLine() + ", size of an array must be of type integer");
+                    }
                 }
             }
 
@@ -805,7 +825,7 @@ public class CheckJythonListener extends MyJythonListener {
     @SuppressWarnings("Duplicates")
     @Override
     public void exitLeftExp(jythonParser.LeftExpContext ctx) {
-
+        lastVariable = lastVariable.parent;
     }
 
     /**
