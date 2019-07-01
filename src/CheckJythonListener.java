@@ -805,6 +805,7 @@ public class CheckJythonListener extends MyJythonListener {
             if (!find || varMisty) {
                 System.out.println("Error108 : in line " + ctx.start.getLine() + " , cannot find variable " + varName);
                 lastVariable.type = "undefined";
+                lastVariable.name = varName;
             } else if (variable != null) {
                 currentScope.expressions.put(variable.name, variable.type);
                 lastVariable.type = variable.type;
@@ -921,7 +922,6 @@ public class CheckJythonListener extends MyJythonListener {
                     lastVariable.type = lastVariable.type.substring(0, lastVariable.type.indexOf("["));
                     currentScope.expressions.put(lastVariable.name, lastVariable.type);
                 } else {
-                    System.out.println("Error108 : in line " + ctx.start.getLine() + " , Can not find Variable " + lastVariable.name.substring(lastVariable.name.lastIndexOf(".") + 1));
                     System.out.println("Error108 : in line " + ctx.start.getLine() + " , Can not find Variable " + lastVariable.name.substring(lastVariable.name.lastIndexOf(".") + 1));
                 }
             }
